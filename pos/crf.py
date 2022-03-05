@@ -1,6 +1,5 @@
-import pickle
-
 from pos.utils import token2features
+import pickle
 
 
 class POSTagger:
