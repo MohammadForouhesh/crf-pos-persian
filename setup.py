@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='crf_pos',
     version='1.0.0',
-    packages=['cfr_pos'],
+    packages=['crf_pos'],
     url='https://github.com/MohammadForouhesh/crf-pos-persian',
     license='MIT',
     author='mforouhesh',

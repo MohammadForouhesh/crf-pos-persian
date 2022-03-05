@@ -1,4 +1,4 @@
-from cfr_pos.utils import token2features
+from crf_pos.utils import token2features
 import pickle
 
 
