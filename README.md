@@ -2,10 +2,17 @@
 
 Persian Part of Speech tagger based on Conditional Random Fields.
 
-## Sample
+## Installation
+```bash
+$ git clone https://github.com/MohammadForouhesh/crf-pos-persian 
+$ cd crf-pos-persian
+$ python setup.py install
+```
+
+## Usage
 
 ```python
-    from crf_pos.crf import POSTagger
+from crf_pos.crf import POSTagger
 
 pos_tagger = POSTagger("model/perpos.model")
 tokens = "ابراهیم رپیسی ریپس جمهور جمهوری اسلامی ایران میباشد".split()
