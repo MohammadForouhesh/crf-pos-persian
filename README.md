@@ -3,12 +3,13 @@
 Persian Part of Speech tagger based on Conditional Random Fields.
 
 ## Sample
-```python
-    from pos.crf import POSTagger
 
-    pos_tagger = POSTagger("model/perpos.model")
-    tokens = "ابراهیم رپیسی ریپس جمهور جمهوری اسلامی ایران میباشد".split()
-    pos_tagger[tokens]
+```python
+    from cfr_pos.crf import POSTagger
+
+pos_tagger = POSTagger("model/perpos.model")
+tokens = "ابراهیم رپیسی ریپس جمهور جمهوری اسلامی ایران میباشد".split()
+pos_tagger[tokens]
 ```
 ## Evaluation
 |Part-of-Speech|  precision|   recall|      f1-score|    support|
