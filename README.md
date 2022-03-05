@@ -1,3 +1,7 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/?branch=main)
+[![Build Status](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/badges/build.png?b=main)](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/build-status/main)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/badges/code-intelligence.svg?b=main)](https://scrutinizer-ci.com/code-intelligence)
+
 # Persian Parts-of-Speech tagger
 
 Persian Part of Speech tagger based on Conditional Random Fields.
