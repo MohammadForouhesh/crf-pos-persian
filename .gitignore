@@ -2,3 +2,4 @@
 *.iml
 *.xml
 *.model
+.DS_Store
