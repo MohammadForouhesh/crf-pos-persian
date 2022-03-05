@@ -31,21 +31,21 @@ def read_conll(path, col=2):
 
 
 def tree2brackets(tree):
-    string, tag = '', ''
+    stream, tag = '', ''
     for item in tree2conlltags(tree):
         if item[2][0] in {'B', 'O'} and tag:
-            string += tag + '] '
+            stream += tag + '] '
             tag = ''
 
         if item[2][0] == 'B':
             tag = item[2].split('-')[1]
-            string += '['
-        string += item[0] + ' '
+            stream += '['
+        stream += item[0] + ' '
 
     if tag:
-        string += tag + '] '
+        stream += tag + '] '
 
-    return string.strip()
+    return stream.strip()
 
 
 def word2features(sent, i):
