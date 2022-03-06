@@ -13,7 +13,7 @@ class CrfPosTagger:
         with open(model_path, 'rb') as resource:
             self.crf = pickle.load(resource)
 
-    def __getitem__(self, item: Union[List[str], str]):
+    def __getitem__(self, item: Union[list, str]) -> List[Tuple[str, str]]:
         if isinstance(item, str):   item = tokenizer.tokenize_words(norm.normalize(item))
         return self.parse([item])[0]
 
