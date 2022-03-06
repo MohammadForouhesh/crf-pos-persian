@@ -7,7 +7,7 @@ norm = parsivar.Normalizer(statistical_space_correction=True, date_normalizing_n
 tokenizer = parsivar.Tokenizer()
 
 
-class POSTagger:
+class CrfPosTagger:
     def __init__(self, model_path):
         self.model_path = model_path
         with open(model_path, 'rb') as resource:
