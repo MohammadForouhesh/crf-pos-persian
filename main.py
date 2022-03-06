@@ -1,8 +1,8 @@
 import unittest
-from crf_pos.crf import POSTagger
+from crf_pos.crf import CrfPosTagger
 from crf_pos.api import downloader
 
-pos_tagger = POSTagger("model/perpos-v1.model")
+pos_tagger = CrfPosTagger("model/perpos-v1.model")
 tokens = "ابراهیم رئیسی رئيس‌جمهور جمهوری اسلامی ایران می‌باشد"
 print(pos_tagger[tokens])
 print(pos_tagger['دانش‌آموز و دانش آموز متفاوت می باشند'])
@@ -12,7 +12,7 @@ print(pos_tagger['نهاد ریاست جمهوری'])
 class MyTestCase(unittest.TestCase):
     def setUp(self) -> None:
         self.model_path = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v1/perpos.model'
-        self.tagger = POSTagger("model/perpos-v1.model")
+        self.tagger = CrfPosTagger("model/perpos-v1.model")
         self.all_tags = ('N', 'P', 'V', 'ADV', 'ADVe', 'RES', 'RESe', 'DET', 'DETe', 'AJ', 'AJe', 'CL', 'INT', 'CONJ',
                          'CONJe', 'POSTP', 'PRO', 'PROe', 'NUM', 'NUMe', 'PUNC', 'Ne', 'Pe')
 
