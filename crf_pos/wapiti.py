@@ -1,7 +1,7 @@
-from typing import Union, List, Any, Tuple, Generator
+from typing import Union, List, Any, Tuple
 from wapiti import Model
 import parsivar
-
+from crf_pos import remove_after_underline
 
 norm = parsivar.Normalizer()
 tokenizer = parsivar.Tokenizer()
@@ -19,9 +19,9 @@ class WapitiPosTagger():
     def parse(self, token_list: List[str]) -> List[List[Tuple[Any, Any]]]:
         sent_line = "\n".join(token_list[0])
         postags = self.wapiti.label_sequence(sent_line).decode('utf-8').strip().split('\n')
-        return list(WapitiPosTagger.zip_vector(zip(token_list, [list(map(lambda item: item, postags))])))
+        return list(WapitiPosTagger.zip_vector(zip(token_list, [list(map(remove_after_underline, postags))])))
 
     @staticmethod
-    def zip_vector(iterable: zip) -> Generator[List[Tuple[str, str]]]:
+    def zip_vector(iterable: zip):
         for key, item in iterable:
             yield list(zip(key, item))
