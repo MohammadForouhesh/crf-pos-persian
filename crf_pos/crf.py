@@ -1,9 +1,9 @@
-from typing import Union
+from typing import Union, List
 import parsivar
 from crf_pos.utils import token2features
 import pickle
 
-norm = parsivar.Normalizer() #statistical_space_correction=True, date_normalizing_needed=True)
+norm = parsivar.Normalizer()
 tokenizer = parsivar.Tokenizer()
 
 
@@ -13,7 +13,7 @@ class CrfPosTagger:
         with open(model_path, 'rb') as resource:
             self.crf = pickle.load(resource)
 
-    def __getitem__(self, item: Union[list[str], str]):
+    def __getitem__(self, item: Union[List[str], str]):
         if isinstance(item, str):   item = tokenizer.tokenize_words(norm.normalize(item))
         return self.parse([item])[0]
 
