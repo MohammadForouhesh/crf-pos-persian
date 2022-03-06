@@ -1,7 +1,21 @@
 import unittest
+import os
 from crf_pos.pos_tagger.crf import CrfPosTagger
-from crf_pos.pos_tagger.api import downloader
+from crf_pos.api import downloader
 from crf_pos.pos_tagger.wapiti import WapitiPosTagger
+from crf_pos.normalization.normalizer import Normalizer
+
+
+class NormalizerTestCase(unittest.TestCase):
+    def setUp(self) -> None:
+        load_dir = 'https://github.com/ICTRC/Parsivar/tree/master/parsivar/resource/normalizer'
+        save_dir = os.path.dirname(os.path.realpath(__file__)) + '/crf_pos/normalization/resource/normalizer/'
+        for ind in range(0, 3):
+            downloader(path=load_dir + f'Dic{ind}_new.txt', save_path=save_dir + f'Dic{ind}_new.txt', mode='w')
+        self.normalizer = Normalizer()
+
+    def test_normalize(self) -> None:
+        self.assertEqual(self.normalizer.normalize('می باشد'), self.normalizer.normalize('می‌باشد'))
 
 
 class CrfTestCase(unittest.TestCase):
