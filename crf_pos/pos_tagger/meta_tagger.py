@@ -1,8 +1,8 @@
 from typing import Union, List, Any, Tuple
-import parsivar
+from crf_pos.normalizer import Normalizer
+from crf_pos.tokenizer import tokenize_words
 
-norm = parsivar.Normalizer()
-tokenizer = parsivar.Tokenizer()
+norm = Normalizer()
 
 
 class MetaTagger:
@@ -10,7 +10,7 @@ class MetaTagger:
         self.tagger = None
 
     def __getitem__(self, item: Union[list, str]) -> List[Tuple[str, str]]:
-        if isinstance(item, str):   item = tokenizer.tokenize_words(norm.normalize(item))
+        if isinstance(item, str):   item = tokenize_words(norm.normalize(item))
         return self.parse([item])[0]
 
     def parse(self, token_list: List[str]) -> List[List[Tuple[Any, Any]]]:
