@@ -21,7 +21,7 @@ $ python setup.py install
 ## Usage
 
 ```python
-from crf_pos.crf import CrfPosTagger
+from crf_pos.pos_tagger.crf import CrfPosTagger
 
 pos_tagger = CrfPosTagger("model/perpos.model")
 tokens = "ابراهیم رپیسی ریپس جمهور جمهوری اسلامی ایران میباشد".split()
