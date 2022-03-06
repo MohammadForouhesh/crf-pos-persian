@@ -1,7 +1,7 @@
 from re import sub
 import os
 
-from crf_pos.tokenizer import clean_text
+from crf_pos.normalization.tokenizer import clean_text
 
 
 class Normalizer:
