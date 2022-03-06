@@ -1,6 +1,6 @@
 import unittest
 from crf_pos.pos_tagger.crf import CrfPosTagger
-from crf_pos import downloader
+from crf_pos.pos_tagger.api import downloader
 from crf_pos.pos_tagger.wapiti import WapitiPosTagger
 
 
