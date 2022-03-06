@@ -1,4 +1,4 @@
-nltk>=3.6.6
+nltk==3.4.5
 setuptools==60.9.3
 scikit-learn==1.0.2
 sklearn-crfsuite==0.3.6
