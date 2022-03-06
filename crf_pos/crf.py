@@ -1,27 +1,15 @@
-from typing import Union, List, Tuple
-import parsivar
+from typing import Union, List, Tuple, Any
+from meta_tagger import MetaTagger
 from crf_pos.utils import token2features
 import pickle
 
-norm = parsivar.Normalizer()
-tokenizer = parsivar.Tokenizer()
 
-
-class CrfPosTagger:
+class CrfPosTagger(MetaTagger):
     def __init__(self, model_path) -> None:
-        self.model_path = model_path
+        super().__init__()
         with open(model_path, 'rb') as resource:
-            self.crf = pickle.load(resource)
+            self.tagger = pickle.load(resource)
 
-    def __getitem__(self, item: Union[list, str]) -> List[Tuple[str, str]]:
-        if isinstance(item, str):   item = tokenizer.tokenize_words(norm.normalize(item))
-        return self.parse([item])[0]
-
-    def parse(self, token_stream: list):
-        y_pred = self.crf.predict([token2features(token) for token in token_stream])
-        return list(CrfPosTagger.zip_vector(zip(token_stream, y_pred)))
-
-    @staticmethod
-    def zip_vector(iterable: zip):
-        for key, item in iterable:
-            yield list(zip(key, item))
+    def parse(self, token_list: List[str]) -> List[List[Tuple[Any, Any]]]:
+        y_pred = self.tagger.predict([token2features(token) for token in token_list])
+        return list(super().zip_vector(zip(token_list, y_pred)))
