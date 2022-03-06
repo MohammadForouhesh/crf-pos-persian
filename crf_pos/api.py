@@ -2,6 +2,7 @@ import requests
 
 
 def downloader(path: str, save_path: str = 'model/perpos-v1.model', mode: str = 'wb'):
+    print(save_path)
     try:
         model_bin = requests.get(path, allow_redirects=True)
         with open(save_path, mode) as resource:
