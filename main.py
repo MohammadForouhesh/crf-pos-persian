@@ -1,7 +1,7 @@
 import unittest
-from crf_pos.crf import CrfPosTagger
-from crf_pos.api import downloader
-from crf_pos.wapiti import WapitiPosTagger
+from crf_pos.pos_tagger.crf import CrfPosTagger
+from crf_pos import downloader
+from crf_pos.pos_tagger.wapiti import WapitiPosTagger
 
 
 class CrfTestCase(unittest.TestCase):
