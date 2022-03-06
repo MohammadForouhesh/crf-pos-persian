@@ -1,6 +1,6 @@
 from typing import Union, List, Any, Tuple
-from crf_pos.normalizer import Normalizer
-from crf_pos.tokenizer import tokenize_words
+from crf_pos.normalization.normalizer import Normalizer
+from crf_pos.normalization.tokenizer import tokenize_words
 
 norm = Normalizer()
 
