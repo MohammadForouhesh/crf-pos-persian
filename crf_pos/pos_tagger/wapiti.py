@@ -1,4 +1,4 @@
-from typing import Union, List, Any, Tuple
+from typing import List, Any, Tuple
 from wapiti import Model
 from meta_tagger import MetaTagger
 from crf_pos import remove_after_underline

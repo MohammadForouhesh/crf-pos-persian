@@ -1,6 +1,6 @@
-from typing import Union, List, Tuple, Any
+from typing import List, Tuple, Any
 from meta_tagger import MetaTagger
-from crf_pos.utils import token2features
+from crf_pos.pos_tagger.utils import token2features
 import pickle
 
 
