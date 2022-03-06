@@ -1,4 +1,4 @@
-from typing import Union, List
+from typing import Union, List, Tuple
 import parsivar
 from crf_pos.utils import token2features
 import pickle
