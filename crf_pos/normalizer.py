@@ -1,19 +1,15 @@
 from re import sub
 import os
 
+from crf_pos.tokenizer import clean_text
+
 
 class Normalizer:
     def __init__(self):
         self.dir_path = os.path.dirname(os.path.realpath(__file__)) + "/"
-
-        self.dic1_path = self.dir_path + 'resource/normalizer/Dic1_new.txt'
-        self.dic2_path = self.dir_path + 'resource/normalizer/Dic2_new.txt'
-        self.dic3_path = self.dir_path + 'resource/normalizer/Dic3_new.txt'
-        self.dic1 = self.load_dictionary(self.dic1_path)
-        self.dic2 = self.load_dictionary(self.dic2_path)
-        self.dic3 = self.load_dictionary(self.dic3_path)
-
-        self.data_helper = DataHelper()
+        self.dic1 = self.load_dictionary(self.dir_path + 'resource/normalizer/Dic1_new.txt')
+        self.dic2 = self.load_dictionary(self.dir_path + 'resource/normalizer/Dic2_new.txt')
+        self.dic3 = self.load_dictionary(self.dir_path + 'resource/normalizer/Dic3_new.txt')
 
     @staticmethod
     def load_dictionary(file_path):
@@ -37,62 +33,50 @@ class Normalizer:
         text = sub(pattern, r'‌\2\3', text)
         return sub(r'( )(شده|نشده)( )', r'‌\2‌', text)
 
-    def space_correction_plus1(self, doc_string):
+    def space_correction_plus1(self, text: str) -> str:
         out_sentences = ''
-        for wrd in doc_string.split(' '):
-            try:
-                out_sentences = out_sentences + ' ' + self.dic1[wrd]
-            except KeyError:
-                out_sentences = out_sentences + ' ' + wrd
+        for word in text.split(' '):
+            try:                out_sentences += ' ' + self.dic1[word]
+            except KeyError:    out_sentences += ' ' + word
         return out_sentences
 
     def space_correction_plus2(self, text: str) -> str:
         out_sentences = ''
-        wrds = text.split(' ')
-        L = wrds.__len__()
-        if L < 2:
+        words = text.split(' ')
+        if len(words) < 2:
             return text
         cnt = 1
-        for i in range(0, L - 1):
-            w = wrds[i] + wrds[i + 1]
+        for i in range(0, len(words) - 1):
+            w = words[i] + words[i + 1]
             try:
-                out_sentences = out_sentences + ' ' + self.dic2[w]
+                out_sentences += ' ' + self.dic2[w]
                 cnt = 0
             except KeyError:
-                if cnt == 1:
-                    out_sentences = out_sentences + ' ' + wrds[i]
+                if cnt == 1:    out_sentences += ' ' + words[i]
                 cnt = 1
-        if cnt == 1:
-            out_sentences = out_sentences + ' ' + wrds[i + 1]
+        if cnt == 1:            out_sentences += ' ' + words[-1]
         return out_sentences
 
     def space_correction_plus3(self, text: str) -> str:
         out_sentences = ''
-        wrds = text.split(' ')
-        L = wrds.__len__()
-        if L < 3:
-            return text
+        words = text.split(' ')
+        if len(words) < 3:   return text
         cnt = 1
         cnt2 = 0
-        for i in range(0, L - 2):
-            w = wrds[i] + wrds[i + 1] + wrds[i + 2]
+        for i in range(0, len(words) - 2):
+            w = words[i] + words[i + 1] + words[i + 2]
             try:
                 out_sentences = out_sentences + ' ' + self.dic3[w]
                 cnt = 0
                 cnt2 = 2
             except KeyError:
-                if cnt == 1 and cnt2 == 0:
-                    out_sentences = out_sentences + ' ' + wrds[i]
-                else:
-                    cnt2 -= 1
+                if cnt == 1 and cnt2 == 0:  out_sentences += ' ' + words[i]
+                else:                       cnt2 -= 1
                 cnt = 1
-        if cnt == 1 and cnt2 == 0:
-            out_sentences = out_sentences + ' ' + wrds[i + 1] + ' ' + wrds[i + 2]
-        elif cnt == 1 and cnt2 == 1:
-            out_sentences = out_sentences + ' ' + wrds[i + 2]
+        if cnt == 1 and cnt2 == 0:          out_sentences += ' ' + words[-2] + ' ' + words[-1]
+        elif cnt == 1 and cnt2 == 1:        out_sentences += ' ' + words[-1]
         return out_sentences
 
     def normalize(self, text: str, new_line_elimination: bool = False):
-        normalized_string = self.data_helper.clean_text(text, new_line_elimination).strip()
-
+        normalized_string = clean_text(text, new_line_elimination).strip()
         return self.space_correction(self.space_correction_plus1(self.space_correction_plus2(self.space_correction_plus3(normalized_string)))).strip()
