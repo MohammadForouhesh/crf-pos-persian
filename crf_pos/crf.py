@@ -8,7 +8,7 @@ tokenizer = parsivar.Tokenizer()
 
 
 class CrfPosTagger:
-    def __init__(self, model_path):
+    def __init__(self, model_path) -> None:
         self.model_path = model_path
         with open(model_path, 'rb') as resource:
             self.crf = pickle.load(resource)
