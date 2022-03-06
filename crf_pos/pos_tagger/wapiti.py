@@ -1,7 +1,7 @@
 from typing import List, Any, Tuple
 from wapiti import Model
-from meta_tagger import MetaTagger
-from crf_pos import remove_after_underline
+from crf_pos.pos_tagger.meta_tagger import MetaTagger
+from crf_pos.pos_tagger.utils import remove_after_underline
 
 
 class WapitiPosTagger(MetaTagger):

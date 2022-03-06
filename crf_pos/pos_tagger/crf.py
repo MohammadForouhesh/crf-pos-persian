@@ -1,5 +1,5 @@
 from typing import List, Tuple, Any
-from meta_tagger import MetaTagger
+from crf_pos.pos_tagger.meta_tagger import MetaTagger
 from crf_pos.pos_tagger.utils import token2features
 import pickle
 
