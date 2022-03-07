@@ -8,12 +8,7 @@ from crf_pos.normalization.normalizer import Normalizer
 
 class NormalizerTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        load_dir = 'https://raw.githubusercontent.com/MohammadForouhesh/Parsivar/master/parsivar/resource/normalizer'
-        save_dir = 'model/normalizer/'
-        os.makedirs(save_dir, exist_ok=True)
-        for ind in range(1, 4):
-            downloader(path=load_dir + f'/Dic{ind}_new.txt', save_path=save_dir + f'Dic{ind}_new.txt', mode='wb')
-        self.normalizer = Normalizer()
+        self.normalizer = Normalizer(downloading=True)
 
     def test_normalize(self) -> None:
         self.assertEqual(self.normalizer.normalize('می باشد'), self.normalizer.normalize('می‌باشد'))
@@ -21,8 +16,11 @@ class NormalizerTestCase(unittest.TestCase):
 
 class CrfTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        self.model_path = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v1/perpos.model'
-        self.tagger = CrfPosTagger("model/perpos-v1.model")
+        load_dir = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/perpos.model'
+        save_dir = os.path.dirname(os.path.realpath(__file__)) + '/model/'
+        os.makedirs(save_dir, exist_ok=True)
+        downloader(path=load_dir, save_path=save_dir + 'perpos-v1.model', mode='wb')
+        self.tagger = CrfPosTagger(save_dir + 'perpos-v1.model')
         self.all_tags = ('N', 'P', 'V', 'ADV', 'ADVe', 'RES', 'RESe', 'DET', 'DETe', 'AJ', 'AJe', 'CL', 'INT', 'CONJ',
                          'CONJe', 'POSTP', 'PRO', 'PROe', 'NUM', 'NUMe', 'PUNC', 'Ne', 'Pe')
 
@@ -47,7 +45,11 @@ class CrfTestCase(unittest.TestCase):
 
 class WapitiTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        self.tagger = WapitiPosTagger(model_path="model/UPC_full_model_wapiti")
+        load_dir = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/UPC_full_model_wapiti'
+        save_dir = os.path.dirname(os.path.realpath(__file__)) + "/model/"
+        os.makedirs(save_dir, exist_ok=True)
+        downloader(path=load_dir, save_path=save_dir + 'UPC_full_model_wapiti', mode='wb')
+        self.tagger = WapitiPosTagger(model_path=save_dir + 'UPC_full_model_wapiti')
         self.all_tags = ('N', 'P', 'V', 'ADV', 'ADJ', 'PRO', 'CON')
 
     def test_wapiti_normalizer(self) -> None:
