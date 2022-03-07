@@ -6,19 +6,19 @@ from crf_pos.normalization.tokenizer import clean_text
 
 class Normalizer:
     def __init__(self):
-        self.dir_path = os.path.dirname(os.path.realpath(__file__)) + "/"
-        self.dic1 = self.load_dictionary(self.dir_path + 'resource/normalizer/Dic1_new.txt')
-        self.dic2 = self.load_dictionary(self.dir_path + 'resource/normalizer/Dic2_new.txt')
-        self.dic3 = self.load_dictionary(self.dir_path + 'resource/normalizer/Dic3_new.txt')
+        self.dir_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))) + "/"
+        self.dic1 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic1_new.txt')
+        self.dic2 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic2_new.txt')
+        self.dic3 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic3_new.txt')
 
     @staticmethod
     def load_dictionary(file_path):
         dict = {}
-        with open(file_path, 'r', encoding='utf-8') as f:
-            g = f.readlines()
-            for Wrds in g:
-                wrd = Wrds.split(' ')
-                dict[wrd[0].strip()] = sub('\n', '', wrd[1].strip())
+        with open(file_path, 'r', encoding='utf-8') as file:
+            dictionary = file.readlines()
+            for words in dictionary:
+                word = words.split(' ')
+                dict[word[0].strip()] = sub('\n', '', word[1].strip())
         return dict
 
     @staticmethod

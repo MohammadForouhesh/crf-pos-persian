@@ -8,11 +8,11 @@ from crf_pos.normalization.normalizer import Normalizer
 
 class NormalizerTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        load_dir = 'https://github.com/ICTRC/Parsivar/tree/master/parsivar/resource/normalizer'
-        save_dir = os.path.dirname(os.path.realpath(__file__)) + '/crf_pos/normalization/resource/normalizer/'
-        os.makedirs(save_dir)
+        load_dir = 'https://raw.githubusercontent.com/MohammadForouhesh/Parsivar/master/parsivar/resource/normalizer'
+        save_dir = 'model/normalizer/'
+        os.makedirs(save_dir, exist_ok=True)
         for ind in range(1, 4):
-            downloader(path=load_dir + f'Dic{ind}_new.txt', save_path=save_dir + f'Dic{ind}_new.txt', mode='w')
+            downloader(path=load_dir + f'/Dic{ind}_new.txt', save_path=save_dir + f'Dic{ind}_new.txt', mode='wb')
         self.normalizer = Normalizer()
 
     def test_normalize(self) -> None:
