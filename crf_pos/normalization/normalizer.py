@@ -1,14 +1,25 @@
 from re import sub
 import os
+
+from crf_pos.api import downloader
 from crf_pos.normalization.tokenizer import clean_text
 
 
 class Normalizer:
-    def __init__(self):
+    def __init__(self, downloading: bool = False):
+        if downloading: Normalizer.get_resources()
         self.dir_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))) + "/"
         self.dic1 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic1_new.txt')
         self.dic2 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic2_new.txt')
         self.dic3 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic3_new.txt')
+
+    @staticmethod
+    def get_resources():
+        load_dir = 'https://raw.githubusercontent.com/MohammadForouhesh/Parsivar/master/parsivar/resource/normalizer'
+        save_dir = os.path.dirname(os.path.realpath(__file__)) + '/model/normalizer/'
+        os.makedirs(save_dir, exist_ok=True)
+        for ind in range(1, 4):
+            downloader(path=load_dir + f'/Dic{ind}_new.txt', save_path=save_dir + f'Dic{ind}_new.txt', mode='wb')
 
     @staticmethod
     def load_dictionary(file_path):
