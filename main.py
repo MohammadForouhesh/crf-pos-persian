@@ -21,10 +21,8 @@ class NormalizerTestCase(unittest.TestCase):
 
 class CrfTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        load_dir = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v1/perpos.model'
-        save_dir = 'model/perpos-v1.model'
-        downloader(path=load_dir, save_path=save_dir, mode='wb')
-        self.tagger = CrfPosTagger(save_dir)
+        self.model_path = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v1/perpos.model'
+        self.tagger = CrfPosTagger("model/perpos-v1.model")
         self.all_tags = ('N', 'P', 'V', 'ADV', 'ADVe', 'RES', 'RESe', 'DET', 'DETe', 'AJ', 'AJe', 'CL', 'INT', 'CONJ',
                          'CONJe', 'POSTP', 'PRO', 'PROe', 'NUM', 'NUMe', 'PUNC', 'Ne', 'Pe')
 
@@ -49,11 +47,7 @@ class CrfTestCase(unittest.TestCase):
 
 class WapitiTestCase(unittest.TestCase):
     def setUp(self) -> None:
-
-        load_dir = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/UPC_full_model_wapiti'
-        save_dir = "model/UPC_full_model_wapiti"
-        downloader(path=load_dir, save_path=save_dir, mode='wb')
-        self.tagger = WapitiPosTagger(model_path=save_dir)
+        self.tagger = WapitiPosTagger(model_path="model/UPC_full_model_wapiti")
         self.all_tags = ('N', 'P', 'V', 'ADV', 'ADJ', 'PRO', 'CON')
 
     def test_wapiti_normalizer(self) -> None:
