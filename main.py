@@ -25,7 +25,7 @@ class CrfTestCase(unittest.TestCase):
         save_dir = 'model/'
         os.makedirs(save_dir, exist_ok=True)
         downloader(path=load_dir, save_path=save_dir + 'perpos-v1.model', mode='wb')
-        self.tagger = CrfPosTagger(save_dir)
+        self.tagger = CrfPosTagger(save_dir + 'perpos-v1.model')
         self.all_tags = ('N', 'P', 'V', 'ADV', 'ADVe', 'RES', 'RESe', 'DET', 'DETe', 'AJ', 'AJe', 'CL', 'INT', 'CONJ',
                          'CONJe', 'POSTP', 'PRO', 'PROe', 'NUM', 'NUMe', 'PUNC', 'Ne', 'Pe')
 
@@ -54,7 +54,7 @@ class WapitiTestCase(unittest.TestCase):
         save_dir = "model/"
         os.makedirs(save_dir, exist_ok=True)
         downloader(path=load_dir, save_path=save_dir + 'UPC_full_model_wapiti', mode='wb')
-        self.tagger = WapitiPosTagger(model_path=save_dir)
+        self.tagger = WapitiPosTagger(model_path=save_dir + 'UPC_full_model_wapiti')
         self.all_tags = ('N', 'P', 'V', 'ADV', 'ADJ', 'PRO', 'CON')
 
     def test_wapiti_normalizer(self) -> None:
