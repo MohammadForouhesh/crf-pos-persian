@@ -21,7 +21,7 @@ class NormalizerTestCase(unittest.TestCase):
 
 class CrfTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        load_dir = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/perpos.model'
+        load_dir = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v1/perpos.model'
         save_dir = 'model/perpos-v1.model'
         downloader(path=load_dir, save_path=save_dir, mode='wb')
         self.tagger = CrfPosTagger(save_dir)
@@ -49,6 +49,7 @@ class CrfTestCase(unittest.TestCase):
 
 class WapitiTestCase(unittest.TestCase):
     def setUp(self) -> None:
+
         load_dir = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/UPC_full_model_wapiti'
         save_dir = "model/UPC_full_model_wapiti"
         downloader(path=load_dir, save_path=save_dir, mode='wb')
