@@ -1,4 +1,5 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/?branch=main)
+[![Code Coverage](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/badges/coverage.png?b=main)](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/?branch=main)
 [![Build Status](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/badges/build.png?b=main)](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/build-status/main)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/badges/code-intelligence.svg?b=main)](https://scrutinizer-ci.com/code-intelligence)
 [![Maintainability](https://api.codeclimate.com/v1/badges/26cc09040c2262f3ecb7/maintainability)](https://codeclimate.com/github/MohammadForouhesh/crf-pos-persian/maintainability)
@@ -12,20 +13,25 @@
 Persian Part of Speech tagger based on Conditional Random Fields.
 
 ## Installation
-```bash
+```shell
 $ git clone https://github.com/MohammadForouhesh/crf-pos-persian 
 $ cd crf-pos-persian
 $ python setup.py install
 ```
+### on CoLab
+```shell
+! pip install git+https://github.com/MohammadForouhesh/crf-pos-persian.git
+```
 
 ## Usage
 
-```python
-from crf_pos.pos_tagger.crf import CrfPosTagger
-
-pos_tagger = CrfPosTagger("model/perpos.model")
+```jupyterpython
+from crf_pos.pos_tagger.wapiti import WapitiPosTagger
+pos_tagger = WapitiPosTagger()
 tokens = "ابراهیم رپیسی ریپس جمهور جمهوری اسلامی ایران میباشد".split()
 pos_tagger[tokens]
+
+[1]: [('ابراهیم', 'N'), ('رپیسی', 'N'), ('ریپس', 'ADJ'), ('جمهور', 'N'), ('جمهوری', 'N'), ('اسلامی', 'ADJ'), ('ایران', 'N'), ('میباشد', 'V')]
 ```
 ## Evaluation
 |Part-of-Speech|  precision|   recall|      f1-score|    support|
