@@ -5,3 +5,4 @@
 .DS_Store
 *.pyc
 model/UPC_full_model_wapiti
+*.txt
