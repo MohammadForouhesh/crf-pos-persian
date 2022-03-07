@@ -1,6 +1,5 @@
 from re import sub
 import os
-
 from crf_pos.normalization.tokenizer import clean_text
 
 
@@ -13,13 +12,13 @@ class Normalizer:
 
     @staticmethod
     def load_dictionary(file_path):
-        dict = {}
+        dictionary = {}
         with open(file_path, 'r', encoding='utf-8') as file:
-            dictionary = file.readlines()
-            for words in dictionary:
+            lines = file.readlines()
+            for words in lines:
                 word = words.split(' ')
-                dict[word[0].strip()] = sub('\n', '', word[1].strip())
-        return dict
+                dictionary[word[0].strip()] = sub('\n', '', word[1].strip())
+        return dictionary
 
     @staticmethod
     def space_correction(text: str) -> str:
@@ -79,4 +78,7 @@ class Normalizer:
 
     def normalize(self, text: str, new_line_elimination: bool = False):
         normalized_string = clean_text(text, new_line_elimination).strip()
-        return self.space_correction(self.space_correction_plus1(self.space_correction_plus2(self.space_correction_plus3(normalized_string)))).strip()
+        return self.space_correction(
+            self.space_correction_plus1(
+                self.space_correction_plus2(
+                    self.space_correction_plus3(normalized_string)))).strip()
