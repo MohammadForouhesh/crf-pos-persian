@@ -38,7 +38,7 @@ jobs:
           # This assumes pytest is installed via the install-package step above
           command: |
             pytest -v
-            coverage run main.py
+            coverage run
             coverage report -m
 
 # Invoke jobs via workflows
