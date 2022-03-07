@@ -12,10 +12,15 @@
 Persian Part of Speech tagger based on Conditional Random Fields.
 
 ## Installation
-```bash
+```shell
 $ git clone https://github.com/MohammadForouhesh/crf-pos-persian 
 $ cd crf-pos-persian
 $ python setup.py install
+```
+
+### on CoLab
+```shell
+! pip install git+https://github.com/MohammadForouhesh/crf-pos-persian.git
 ```
 
 ## Usage
