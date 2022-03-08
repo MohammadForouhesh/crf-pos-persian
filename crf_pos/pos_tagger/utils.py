@@ -1,3 +1,15 @@
+"""
+Utils
+
+..................................................................................................................
+MIT License
+
+Copyright (c) 2021-2023 AUT Iran, Mohammad H Forouhesh
+Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
+..................................................................................................................
+This module contains various tools and one-line functions for Part-of-Speech tagging.
+"""
+
 from nltk import tree2conlltags
 import string
 import re
