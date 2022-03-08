@@ -34,12 +34,12 @@ This repository contains Persian Part of Speech tagger based on Conditional Rand
 
 ## TO-DO: <a name="todo"></a>
 
-- [x] CRF tagger
-- [x] Wapiti tagger
-- [x] Native Normalizer [pull #4](https://github.com/MohammadForouhesh/crf-pos-persian/pull/4#issuecomment-1060246648)
-- [x] UnitTesting [commit #127](https://github.com/MohammadForouhesh/crf-pos-persian/commit/8c0c6d4ae9908d29c39e326bf1a3d14947555141)
-- [x] CI/CD [pull #5](https://github.com/MohammadForouhesh/crf-pos-persian/pull/5#issuecomment-1060697450)
-- [x] Scrutinize Coverage [issue #8](https://github.com/MohammadForouhesh/crf-pos-persian/issues/8#issue-1162353982)
+- [x] CRF tagger [commit#64](https://github.com/MohammadForouhesh/crf-pos-persian/commit/c0897ae7534ff322a594808c6ff1d2b4f12b627b)
+- [x] Wapiti tagger [commit#56](https://github.com/MohammadForouhesh/crf-pos-persian/commit/9b267ad01d5ccac162fe9d29071c6ea22d34804f)
+- [x] Native Normalizer [pull#4](https://github.com/MohammadForouhesh/crf-pos-persian/pull/4#issuecomment-1060246648)
+- [x] UnitTesting [commit#127](https://github.com/MohammadForouhesh/crf-pos-persian/commit/8c0c6d4ae9908d29c39e326bf1a3d14947555141)
+- [x] CI/CD [pull#5](https://github.com/MohammadForouhesh/crf-pos-persian/pull/5#issuecomment-1060697450)
+- [x] Scrutinize Coverage [issue#8](https://github.com/MohammadForouhesh/crf-pos-persian/issues/8#issue-1162353982)
 - [ ] Improve Coverage
 - [ ] Smooth Installation
 - [ ] Excel code quality
