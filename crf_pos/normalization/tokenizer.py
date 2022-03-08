@@ -22,6 +22,11 @@ add_space = lambda text: str(" " + text.group().strip(' ') + " ")
 
 
 def tokenize_sentences(text: str) -> List[str]:
+    """
+    A sentencizer function, split text into sentence.
+    :param text:    A text.
+    :return:        Splatted sentences in the format of list of strings.
+    """
     text = pattern_matching(text)
     nums_list = re.findall(r"[-+]?\d*\.\d+|\d+", text)
     for number in nums_list:
@@ -32,6 +37,11 @@ def tokenize_sentences(text: str) -> List[str]:
 
 
 def pattern_matching(text: str) -> str:
+    """
+    A regex based pattern matching function to remove the unwanted characters in the text.
+    :param text:    The input text (str).
+    :return:        A text without the patterns.
+    """
     patterns = re.compile(pattern="["
                                   r"[-+]?\d*\.\d+|\d+"
                                   r"([!\.\?؟]+)[\n]*"
@@ -43,7 +53,13 @@ def pattern_matching(text: str) -> str:
     return str(patterns.sub(r'', text))
 
 
-def clean_text(text_doc: str, new_line_elimination: str) -> str:
+def clean_text(text_doc: str, new_line_elimination: bool) -> str:
+    """
+    A preprocessing function to delete the punctuations.
+    :param text_doc:    The input text.
+    :param new_line_elimination: A boolean that controls the usage of half-space
+    :return:            Removed punctuation text.
+    """
     punctuations = r')(}{:؟!،؛»«.' + r"/<>?.,:;"
     punctuations = '[' + punctuations + string.punctuation + ']'
     punctuations = punctuations.replace("@", "")
@@ -52,22 +68,22 @@ def clean_text(text_doc: str, new_line_elimination: str) -> str:
 
     pattern = r"[-+]?\d*\.\d+|\d+"
     nums_list = re.findall(pattern, text_doc)
-    newstring = re.sub(pattern, 'floatingpointnumber', text_doc)
+    new_string = re.sub(pattern, 'floatingpointnumber', text_doc)
 
     pattern = '\s*' + punctuations + '+' + '\s*'
-    newstring = re.sub(pattern, add_space, newstring)
+    new_string = re.sub(pattern, add_space, new_string)
 
     pattern = r'[\n]+'
-    if new_line_elimination:  newstring = re.sub(pattern, " ", newstring)
+    if new_line_elimination:  new_string = re.sub(pattern, " ", new_string)
 
     pattern = r'[^' + r")(}{:؟!-،؛»«.@$&%" + r"/<>?.,:;" + r"a-zA-Z0-9" + 'آ-ی' + '‌' + '\d\s:]'
-    newstring = re.sub(pattern, '', newstring)
+    new_string = re.sub(pattern, '', new_string)
 
     pattern = r'[ ]+'
-    newstring = re.sub(pattern, ' ', newstring)
+    new_string = re.sub(pattern, ' ', new_string)
 
     for number in nums_list:
         pattern = 'floatingpointnumber'
-        newstring = re.sub(pattern, number, newstring, 1)
+        new_string = re.sub(pattern, number, new_string, 1)
 
-    return newstring
+    return new_string
