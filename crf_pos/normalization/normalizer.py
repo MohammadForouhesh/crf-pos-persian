@@ -83,6 +83,7 @@ class Normalizer:
         :param text:        The input text (str).
         :return:            The half-spaced corrected text (str).
         """
+        ## refrence_dictionary
         for word in text.split(' '):
             if word in self.dic1:
                 yield self.dic1[word]
