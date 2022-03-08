@@ -14,7 +14,6 @@ from typing import Generator, Dict, Any
 import string
 import re
 
-
 token2features = lambda item: [word2features(item, ind) for ind in range(len(item))]
 sent2labels = lambda item: [postag for token, postag in item]
 sent2tokens = lambda item: [token for token, postag in item]
@@ -42,58 +41,58 @@ def word2features(text: str, index: int) -> Dict[str, Any]:
     :param index:   The place of the word at which we want to move the window back and forth.
     :return:        A dictionary containing extracted features.
     """
-    W = text[index]
+    word = text[index]
     features = {
         'B': 1.0,
-        'W': W,
-        'P': W in string.punctuation,
-        'T': template(W),
-        'D(W)': isdigit(W),
+        'W': word,
+        'P': word in string.punctuation,
+        'T': template(word),
+        'D(W)': isdigit(word),
     }
-    for length in range(max(4 + 1, len(W)) + 1):
-        for k, v in ngram(W, length=length):
+    for length in range(max(4 + 1, len(word)) + 1):
+        for k, v in ngram(word, length=length):
             features[k] = v
     if index > 0:
-        W = text[index - 1][0]
+        word = text[index - 1][0]
         features.update({
-            '-1W[-3': W[-3:],
-            '-1W[-2': W[-2:],
-            '-1W[-1': W[-1:],
-            '-1W': W,
-            '-1W0W': W + text[index],
-            '-1P': W in string.punctuation,
-            '-1T': template(W)
+            '-1W[-3': word[-3:],
+            '-1W[-2': word[-2:],
+            '-1W[-1': word[-1:],
+            '-1W': word,
+            '-1W0W': word + text[index],
+            '-1P': word in string.punctuation,
+            '-1T': template(word)
         })
     else:
         features['BOS'] = True
     if index > 1:
-        W = text[index - 2][0]
+        word = text[index - 2][0]
         features.update({
-            '-2W[-3': W[-3:],
-            '-2W[-2': W[-2:],
-            '-2W[-1': W[-1:],
-            '-2P': W in string.punctuation,
-            '-2T': template(W)
+            '-2W[-3': word[-3:],
+            '-2W[-2': word[-2:],
+            '-2W[-1': word[-1:],
+            '-2P': word in string.punctuation,
+            '-2T': template(word)
         })
 
     if index < len(text) - 2:
-        W = text[index + 2][0]
+        word = text[index + 2][0]
         features.update({
-            '+2W[-1': W[-1:],
-            '+2W[-2': W[-2:],
-            '+2W': W,
-            '+2P': W in string.punctuation,
-            '+2T': template(W)
+            '+2W[-1': word[-1:],
+            '+2W[-2': word[-2:],
+            '+2W': word,
+            '+2P': word in string.punctuation,
+            '+2T': template(word)
         })
     if index < len(text) - 1:
-        W = text[index + 1][0]
+        word = text[index + 1][0]
         features.update({
-            '+1W[-1': W[-1:],
-            '+1W': W,
-            '+1W0W': W + text[index],
-            '+1W[-2': W[-2:],
-            '+1:P': W in string.punctuation,
-            '+1:T': template(W)
+            '+1W[-1': word[-1:],
+            '+1W': word,
+            '+1W0W': word + text[index],
+            '+1W[-2': word[-2:],
+            '+1:P': word in string.punctuation,
+            '+1:T': template(word)
         })
     else:
         features['EOS'] = True

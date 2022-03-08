@@ -73,7 +73,7 @@ class Normalizer:
         text = sub(pattern, r'‌\2\3', text)
         return sub(r'( )(شده|نشده)( )', r'‌\2‌', text)
 
-    def space_correction_plus1(self, text: str) -> str:
+    def uni_window_correction(self, text: str) -> str:
         """
         A tool to help with rule-based half space correction using external resources.
         :param text:        The input text (str).
@@ -85,7 +85,7 @@ class Normalizer:
             except KeyError:    out_sentences += ' ' + word
         return out_sentences
 
-    def space_correction_plus2(self, text: str) -> str:
+    def bi_window_correction(self, text: str) -> str:
         """
         A tool to help with rule-based half space correction using external resources.
         :param text:        The input text (str).
@@ -97,9 +97,9 @@ class Normalizer:
             return text
         cnt = 1
         for i in range(0, len(words) - 1):
-            w = words[i] + words[i + 1]
+            combination = words[i] + words[i + 1]
             try:
-                out_sentences += ' ' + self.dic2[w]
+                out_sentences += ' ' + self.dic2[combination]
                 cnt = 0
             except KeyError:
                 if cnt == 1:    out_sentences += ' ' + words[i]
@@ -107,7 +107,7 @@ class Normalizer:
         if cnt == 1:            out_sentences += ' ' + words[-1]
         return out_sentences
 
-    def space_correction_plus3(self, text: str) -> str:
+    def tri_window_correction(self, text: str) -> str:
         """
         A tool to help with rule-based half space correction using external resources.
         :param text:        The input text (str).
@@ -119,9 +119,9 @@ class Normalizer:
         cnt = 1
         cnt2 = 0
         for i in range(0, len(words) - 2):
-            w = words[i] + words[i + 1] + words[i + 2]
+            combination = words[i] + words[i + 1] + words[i + 2]
             try:
-                out_sentences = out_sentences + ' ' + self.dic3[w]
+                out_sentences = out_sentences + ' ' + self.dic3[combination]
                 cnt = 0
                 cnt2 = 2
             except KeyError:
@@ -141,6 +141,6 @@ class Normalizer:
         """
         normalized_string = clean_text(text, new_line_elimination).strip()
         return self.space_correction(
-            self.space_correction_plus1(
-                self.space_correction_plus2(
-                    self.space_correction_plus3(normalized_string)))).strip()
+            self.uni_window_correction(
+                self.bi_window_correction(
+                    self.tri_window_correction(normalized_string)))).strip()

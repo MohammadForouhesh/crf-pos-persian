@@ -70,7 +70,7 @@ def clean_text(text_doc: str, new_line_elimination: bool) -> str:
     nums_list = re.findall(pattern, text_doc)
     new_string = re.sub(pattern, 'floatingpointnumber', text_doc)
 
-    pattern = '\s*' + punctuations + '+' + '\s*'
+    pattern = r'\s*' + punctuations + '+' + r'\s*'
     new_string = re.sub(pattern, add_space, new_string)
 
     pattern = r'[\n]+'
@@ -85,5 +85,4 @@ def clean_text(text_doc: str, new_line_elimination: bool) -> str:
     for number in nums_list:
         pattern = 'floatingpointnumber'
         new_string = re.sub(pattern, number, new_string, 1)
-
     return new_string
