@@ -1,7 +1,18 @@
-from nltk import tree2conlltags
+"""
+Utils
+
+..................................................................................................................
+MIT License
+
+Copyright (c) 2021-2023 AUT Iran, Mohammad H Forouhesh
+Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
+..................................................................................................................
+This module contains various tools and one-line functions for Part-of-Speech tagging.
+"""
+from typing import Generator, Dict, Any
+
 import string
 import re
-
 
 token2features = lambda item: [word2features(item, ind) for ind in range(len(item))]
 sent2labels = lambda item: [postag for token, postag in item]
@@ -12,100 +23,78 @@ is_all_latin = lambda item: bool(len(re.sub('[a-zA-Z]*', '', item)) == 0)
 remove_after_underline = lambda item: item[:item.find('_')] if '_' in item else item
 
 
-def ngram(word, length=2):
-    for i in range(len(word) - 1):
-        yield 'word[' + str(i) + ":" + str(i + length) + "]", word[i:i + length]
+def ngram(text: str, length: int = 2) -> Generator[str, None, None]:
+    """
+    function for detecting n-grams.
+    :param text:    Input text, it is in the form of a sentence and it is a string.
+    :param length:  The length at which we want to extract n-grams.
+    :return:        A Generator, it yields words pattern.
+    """
+    for i in range(len(text) - 1):
+        yield 'word[' + str(i) + ":" + str(i + length) + "]", text[i:i + length]
 
 
-def read_conll(path, col=2):
-    with open(path, "r", encoding="utf-8") as conll:
-        out = []
-        for sent in conll.readlines():
-            split = sent.strip("\r\n").split()
-            if len(split) > 1:
-                none_token_count = col - 1
-                new_elem = split[-1:]
-                new_elem = split[:none_token_count] + new_elem
-                out.append(new_elem)
-
-            else:
-                yield out
-                out = []
-
-
-def tree2brackets(tree):
-    stream, tag = '', ''
-    for item in tree2conlltags(tree):
-        if item[2][0] in {'B', 'O'} and tag:
-            stream += tag + '] '
-            tag = ''
-
-        if item[2][0] == 'B':
-            tag = item[2].split('-')[1]
-            stream += '['
-        stream += item[0] + ' '
-
-    if tag:
-        stream += tag + '] '
-
-    return stream.strip()
-
-
-def word2features(sent, i):
-    W = sent[i]
+def word2features(text: str, index: int) -> Dict[str, Any]:
+    """
+    A feature extraction tool that helps with extraction of different useful information within the given text.
+    :param text:    The input text. A string.
+    :param index:   The place of the word at which we want to move the window back and forth.
+    :return:        A dictionary containing extracted features.
+    """
+    word = text[index]
     features = {
         'B': 1.0,
-        'W': W,
-        'P': W in string.punctuation,
-        'T': template(W),
-        'D(W)': isdigit(W),
+        'W': word,
+        'P': word in string.punctuation,
+        'T': template(word),
+        'D(W)': isdigit(word),
     }
-    for length in range(max(4 + 1, len(W)) + 1):
-        for k, v in ngram(W, length=length):
+    for length in range(max(4 + 1, len(word)) + 1):
+        for k, v in ngram(word, length=length):
             features[k] = v
-    if i > 0:
-        W = sent[i - 1][0]
+    if index > 0:
+        word = text[index - 1][0]
         features.update({
-            '-1W[-3': W[-3:],
-            '-1W[-2': W[-2:],
-            '-1W[-1': W[-1:],
-            '-1W': W,
-            '-1W0W': W + sent[i],
-            '-1P': W in string.punctuation,
-            '-1T': template(W)
+            '-1W[-3': word[-3:],
+            '-1W[-2': word[-2:],
+            '-1W[-1': word[-1:],
+            '-1W': word,
+            '-1W0W': word + text[index],
+            '-1P': word in string.punctuation,
+            '-1T': template(word)
         })
     else:
         features['BOS'] = True
-    if i > 1:
-        W = sent[i - 2][0]
+    if index > 1:
+        word = text[index - 2][0]
         features.update({
-            '-2W[-3': W[-3:],
-            '-2W[-2': W[-2:],
-            '-2W[-1': W[-1:],
-            '-2P': W in string.punctuation,
-            '-2T': template(W)
+            '-2W[-3': word[-3:],
+            '-2W[-2': word[-2:],
+            '-2W[-1': word[-1:],
+            '-2P': word in string.punctuation,
+            '-2T': template(word)
         })
 
-    if i < len(sent) - 2:
-        W = sent[i + 2][0]
+    if index < len(text) - 2:
+        word = text[index + 2][0]
         features.update({
-            '+2W[-1': W[-1:],
-            '+2W[-2': W[-2:],
-            '+2W': W,
-            '+2P': W in string.punctuation,
-            '+2T': template(W)
+            '+2W[-1': word[-1:],
+            '+2W[-2': word[-2:],
+            '+2W': word,
+            '+2P': word in string.punctuation,
+            '+2T': template(word)
         })
-    if i < len(sent) - 1:
-        W = sent[i + 1][0]
+    if index < len(text) - 1:
+        word = text[index + 1][0]
         features.update({
-            '+1W[-1': W[-1:],
-            '+1W': W,
-            '+1W0W': W + sent[i],
-            '+1W[-2': W[-2:],
-            '+1:P': W in string.punctuation,
-            '+1:T': template(W)
+            '+1W[-1': word[-1:],
+            '+1W': word,
+            '+1W0W': word + text[index],
+            '+1W[-2': word[-2:],
+            '+1:P': word in string.punctuation,
+            '+1:T': template(word)
         })
     else:
         features['EOS'] = True
-    if 0 < i < len(sent) - 1:   features['-1W/+1W'] = sent[i + 1][0] + "/" + sent[i - 1][0]
+    if 0 < index < len(text) - 1:   features['-1W/+1W'] = text[index + 1][0] + "/" + text[index - 1][0]
     return features

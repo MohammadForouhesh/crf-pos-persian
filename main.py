@@ -1,3 +1,15 @@
+"""
+Main
+
+..................................................................................................................
+MIT License
+
+Copyright (c) 2021-2023 AUT Iran, Mohammad H Forouhesh
+Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
+..................................................................................................................
+This module serves as unit testing for various functionalities in the code.
+"""
+
 import unittest
 import os
 from crf_pos.pos_tagger.crf import CrfPosTagger
@@ -39,7 +51,7 @@ class CrfTestCase(unittest.TestCase):
         for item in self.tagger['ابراهیم رئیسی رئيس‌جمهور جمهوری اسلامی ایران میباشد']:
             self.assertIn(member=item[1], container=self.all_tags)
 
-    def test_crf_ai(self):
+    def test_crf_ai(self) -> None:
         self.assertIn(self.tagger['رئيس‌جمهور'][0][1], 'Ne')
 
 
