@@ -20,6 +20,9 @@ from crf_pos.normalization.tokenizer import clean_text
 
 
 class Normalizer:
+    """
+    A native persian text normalizer to help detecting half-spaces.
+    """
     def __init__(self, downloading: bool = False) -> None:
         self.dir_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))) + "/"
         if downloading: self.get_resources()
@@ -28,6 +31,10 @@ class Normalizer:
         self.dic3 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic3_new.txt')
 
     def get_resources(self) -> None:
+        """
+        A tool to download required resources over internet.
+        :return:    None.
+        """
         load_dir = 'https://raw.githubusercontent.com/MohammadForouhesh/Parsivar/master/parsivar/resource/normalizer'
         save_dir = self.dir_path + '/model/normalizer/'
         os.makedirs(save_dir, exist_ok=True)
@@ -36,6 +43,11 @@ class Normalizer:
 
     @staticmethod
     def load_dictionary(file_path: str) -> Dict[str, str]:
+        """
+        A static method that read a file and return a keyed dictionary of the contents of the file.
+        :param file_path:   The path (str) to the resource file.
+        :return:            A dictionary of the contents of the file.
+        """
         dictionary = {}
         with open(file_path, 'r', encoding='utf-8') as file:
             lines = file.readlines()
@@ -46,6 +58,11 @@ class Normalizer:
 
     @staticmethod
     def space_correction(text: str) -> str:
+        """
+        A tool to help with rule-based half space correction
+        :param text:        The input text (str).
+        :return:            The half-spaced corrected text (str).
+        """
         text = sub(r'^(بی|می|نمی)( )', r'\1‌', text)
         text = sub(r'( )(می|نمی|بی)( )', r'\1\2‌', text)
         pattern = r'( )(هایی|ها|های|ایی|هایم|هایت|هایش|هایمان|هایتان|هایشان|ات|ان|ین' \
@@ -57,6 +74,11 @@ class Normalizer:
         return sub(r'( )(شده|نشده)( )', r'‌\2‌', text)
 
     def space_correction_plus1(self, text: str) -> str:
+        """
+        A tool to help with rule-based half space correction using external resources.
+        :param text:        The input text (str).
+        :return:            The half-spaced corrected text (str).
+        """
         out_sentences = ''
         for word in text.split(' '):
             try:                out_sentences += ' ' + self.dic1[word]
@@ -64,6 +86,11 @@ class Normalizer:
         return out_sentences
 
     def space_correction_plus2(self, text: str) -> str:
+        """
+        A tool to help with rule-based half space correction using external resources.
+        :param text:        The input text (str).
+        :return:            The half-spaced corrected text (str).
+        """
         out_sentences = ''
         words = text.split(' ')
         if len(words) < 2:
@@ -81,6 +108,11 @@ class Normalizer:
         return out_sentences
 
     def space_correction_plus3(self, text: str) -> str:
+        """
+        A tool to help with rule-based half space correction using external resources.
+        :param text:        The input text (str).
+        :return:            The half-spaced corrected text (str).
+        """
         out_sentences = ''
         words = text.split(' ')
         if len(words) < 3:   return text
@@ -101,6 +133,12 @@ class Normalizer:
         return out_sentences
 
     def normalize(self, text: str, new_line_elimination: bool = False) -> str:
+        """
+        Normalizer function, it is the main function in this class.
+        :param text:        The input text.
+        :param new_line_elimination: A boolean, controls whether to use another character for half-space
+        :return:            A normalized text.
+        """
         normalized_string = clean_text(text, new_line_elimination).strip()
         return self.space_correction(
             self.space_correction_plus1(
