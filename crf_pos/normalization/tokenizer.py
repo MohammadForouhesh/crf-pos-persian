@@ -23,7 +23,6 @@ add_space = lambda text: str(" " + text.group().strip(' ') + " ")
 
 def tokenize_sentences(text: str) -> List[str]:
     text = pattern_matching(text)
-
     nums_list = re.findall(r"[-+]?\d*\.\d+|\d+", text)
     for number in nums_list:
         pattern = 'floatingpointnumber'
