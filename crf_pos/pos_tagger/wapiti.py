@@ -26,10 +26,10 @@ class WapitiPosTagger(MetaTagger):
 
     def parse(self, token_list: List[str]) -> List[List[Tuple[Any, Any]]]:
         """
-        Primary function that override the same method from the super class. This function is responsible for the logic
+        Primary function that overwrite the same method from the super class. This function is responsible for the logic
         behind the model.
         :param token_list:  A list of tokens (strings)
-        :return:            A list of extracted part of speeches and their related tokens.
+        :return:            A list of list of extracted part of speeches and their related tokens.
         """
         sent_line = "\n".join(token_list[0])
         postags = self.tagger.label_sequence(sent_line).decode('utf-8').strip().split('\n')

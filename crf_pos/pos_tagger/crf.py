@@ -27,10 +27,10 @@ class CrfPosTagger(MetaTagger):
 
     def parse(self, token_list: List[str]) -> List[List[Tuple[Any, Any]]]:
         """
-        Primary function that override the same method from the super class. This function is responsible for the logic
+        Primary function that overwrite the same method from the super class. This function is responsible for the logic
         behind the model.
         :param token_list:  A list of tokens (strings)
-        :return:            A list of extracted part of speeches and their related tokens.
+        :return:            A list of list of extracted part of speeches and their related tokens.
         """
         y_pred = self.tagger.predict([token2features(token) for token in token_list])
         return list(super().zip_vector(zip(token_list, y_pred)))
