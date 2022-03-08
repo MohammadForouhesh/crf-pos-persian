@@ -40,6 +40,7 @@ This repository contains Persian Part of Speech tagger based on Conditional Rand
 - [x] UnitTesting [commit#127](https://github.com/MohammadForouhesh/crf-pos-persian/commit/8c0c6d4ae9908d29c39e326bf1a3d14947555141)
 - [x] CI/CD [pull#5](https://github.com/MohammadForouhesh/crf-pos-persian/pull/5#issuecomment-1060697450)
 - [x] Scrutinize Coverage [issue#8](https://github.com/MohammadForouhesh/crf-pos-persian/issues/8#issue-1162353982)
+- [ ] Documentation
 - [ ] Improve Coverage
 - [ ] Smooth Installation
 - [ ] Excel code quality
