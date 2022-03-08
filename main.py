@@ -1,3 +1,15 @@
+"""
+Main
+
+..................................................................................................................
+MIT License
+
+Copyright (c) 2021-2023 AUT Iran, Mohammad H Forouhesh
+Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
+..................................................................................................................
+This module serves as unit testing for various functionalities in the code.
+"""
+
 import unittest
 import os
 from crf_pos.pos_tagger.crf import CrfPosTagger
