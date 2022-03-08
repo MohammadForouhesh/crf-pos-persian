@@ -14,10 +14,10 @@ This repository contains Persian Part of Speech tagger based on Conditional Rand
 
 # Table of Contents
 1. [TO-DO](#todo)
-2. [Installation](#summary)
-    1. [on CoLab](#tpa_intro)
+2. [Installation](#install)
+    1. [on CoLab](#colab)
 3. [Usage](#usage)
-4. [Evaluation](#tpa_example)
+4. [Evaluation](#eval)
 
 [comment]: <> (5. [I/O]&#40;#tpa_io&#41;)
 
@@ -36,8 +36,8 @@ This repository contains Persian Part of Speech tagger based on Conditional Rand
 
 - [x] CRF tagger
 - [x] Wapiti tagger
-- [x] Native Normalizer [pull #4]https://github.com/MohammadForouhesh/crf-pos-persian/pull/4#issuecomment-1060246648
-- [x] UnitTesting ![commit #127](https://github.com/MohammadForouhesh/crf-pos-persian/commit/8c0c6d4ae9908d29c39e326bf1a3d14947555141
+- [x] Native Normalizer [pull #4](https://github.com/MohammadForouhesh/crf-pos-persian/pull/4#issuecomment-1060246648)
+- [x] UnitTesting ![commit #127](https://github.com/MohammadForouhesh/crf-pos-persian/commit/8c0c6d4ae9908d29c39e326bf1a3d14947555141)
 - [x] CI/CD ![pull #5](https://github.com/MohammadForouhesh/crf-pos-persian/pull/5#issuecomment-1060697450)
 - [x] Scrutinize Coverage ![issue #8](https://github.com/MohammadForouhesh/crf-pos-persian/issues/8#issue-1162353982)
 - [ ] Improve Coverage
