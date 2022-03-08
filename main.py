@@ -27,12 +27,12 @@ class NormalizerTestCase(unittest.TestCase):
         self.assertEqual(self.normalizer.normalize('می باشد'), self.normalizer.normalize('میباشد'))
 
     def test_uni_window(self) -> None:
-        self.assertEqual(' '.join(self.normalizer.uni_window_correction('بیطرفانه')),
-                         ' '.join(self.normalizer.uni_window_correction('بی‌طرفانه')))
-        self.assertEqual(' '.join(self.normalizer.uni_window_correction('بیخبر')),
-                         ' '.join(self.normalizer.uni_window_correction('بی‌خبر')))
-        self.assertNotEqual(' '.join(self.normalizer.uni_window_correction('بیخبر')),
-                            ' '.join(self.normalizer.uni_window_correction('بی خبر')))
+        self.assertEqual(' '.join(self.normalizer.moving_mavericks('بیطرفانه')),
+                         ' '.join(self.normalizer.moving_mavericks('بی‌طرفانه')))
+        self.assertEqual(' '.join(self.normalizer.moving_mavericks('بیخبر')),
+                         ' '.join(self.normalizer.moving_mavericks('بی‌خبر')))
+        self.assertNotEqual(' '.join(self.normalizer.moving_mavericks('بیخبر')),
+                            ' '.join(self.normalizer.moving_mavericks('بی خبر')))
 
     def test_bi_window(self) -> None:
         self.assertEqual(self.normalizer.bi_window_correction('چشم‌پوشی'),

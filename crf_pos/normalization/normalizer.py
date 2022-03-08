@@ -83,18 +83,21 @@ class Normalizer:
             try:                yield ' '.join([tokens.pop(0)] + [tokens[_] for _ in range(window_length - 1)])
             except IndexError:  break
 
-    def uni_window_correction(self, text: str) -> str:
+    def vector_mavericks(self, text: str, window_length: int) -> Generator[str, None, None]:
+        for word in self.window_sampling(text.split(), window_length):
+            if word in self.dic1:   yield self.dic1[word]
+            else:                   yield word
+
+    def moving_mavericks(self, text: str, scope: int = 3) -> str:
         """
         A tool to help with rule-based half space correction using external resources.
         :param text:        The input text (str).
+        :param scope:       Maximum window length.
         :return:            The half-spaced corrected text (str).
         """
         ## ToDo refrence_dictionary
-        for word in self.window_sampling(text.split(), 1):
-            if word in self.dic1:
-                yield self.dic1[word]
-            else:
-                yield word
+        yield self.vector_mavericks(text, scope)
+        if scope > 1: yield from self.moving_mavericks(text, scope - 1)
 
     def bi_window_correction(self, text: str) -> str:
         """
@@ -153,6 +156,6 @@ class Normalizer:
         """
         cleansed_string = clean_text(text, new_line_elimination).strip()
         return self.space_correction(
-            ' '.join(self.uni_window_correction(
+            ' '.join(self.moving_mavericks(
                 self.bi_window_correction(
                     self.tri_window_correction(cleansed_string))))).strip()
