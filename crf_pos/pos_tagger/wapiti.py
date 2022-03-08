@@ -1,3 +1,15 @@
+"""
+Wapiti Classifier
+
+..................................................................................................................
+MIT License
+
+Copyright (c) 2021-2023 AUT Iran, Mohammad H Forouhesh
+Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
+..................................................................................................................
+This module contains the implementation and encapsulation for Wapiti classifier.
+"""
+
 from typing import List, Any, Tuple
 from wapiti import Model
 from crf_pos.pos_tagger.meta_tagger import MetaTagger
