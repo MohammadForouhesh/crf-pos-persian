@@ -30,20 +30,17 @@ class Normalizer:
                 os.path.dirname(
                     os.path.realpath(__file__)))) + "/"
         if downloading: self.get_resources()
-        self.dic1 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic1_new.txt')
-        self.dic2 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic2_new.txt')
-        self.dic3 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic3_new.txt')
+        self.corrections = self.load_dictionary(self.dir_path + 'model/normalizer/corrections.txt')
 
     def get_resources(self) -> None:
         """
         A tool to download required resources over internet.
         :return:    None.
         """
-        load_dir = 'https://raw.githubusercontent.com/MohammadForouhesh/Parsivar/master/parsivar/resource/normalizer'
+        load_dir = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/corrections.text'
         save_dir = self.dir_path + '/model/normalizer/'
         os.makedirs(save_dir, exist_ok=True)
-        for ind in range(1, 4):
-            downloader(path=load_dir + f'/Dic{ind}_new.txt', save_path=save_dir + f'Dic{ind}_new.txt', mode='wb')
+        downloader(path=load_dir, save_path=save_dir + 'corrections.txt', mode='wb')
 
     @staticmethod
     def load_dictionary(file_path: str) -> Dict[str, str]:
@@ -85,8 +82,9 @@ class Normalizer:
 
     def vector_mavericks(self, text: str, window_length: int) -> Generator[str, None, None]:
         for word in self.window_sampling(text.split(), window_length):
-            if word in self.dic1:   yield self.dic1[word]
-            else:                   yield word
+            if word in self.corrections:                    yield self.corrections[word]
+            elif word.replace(' ', '') in self.corrections: yield self.corrections[word.replace(' ', '')]
+            else:                                           yield word
 
     def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str, str, None]:
         # ToDo reference_dictionary
@@ -98,53 +96,6 @@ class Normalizer:
         if scope == 1: return ' '.join(self.vector_mavericks(text, scope))
         return self.collapse_mavericks(text, scope - 1)
 
-    def bi_window_correction(self, text: str) -> str:
-        """
-        A tool to help with rule-based half space correction using external resources.
-        :param text:        The input text (str).
-        :return:            The half-spaced corrected text (str).
-        """
-        out_sentences = ''
-        words = text.split(' ')
-        if len(words) < 2:
-            return text
-        cnt = 1
-        for i in range(0, len(words) - 1):
-            combination = words[i] + words[i + 1]
-            if combination in self.dic2:
-                out_sentences += ' ' + self.dic2[combination]
-                cnt = 0
-            else:
-                if cnt == 1:    out_sentences += ' ' + words[i]
-                cnt = 1
-        if cnt == 1:            out_sentences += ' ' + words[-1]
-        return out_sentences
-
-    def tri_window_correction(self, text: str) -> str:
-        """
-        A tool to help with rule-based half space correction using external resources.
-        :param text:        The input text (str).
-        :return:            The half-spaced corrected text (str).
-        """
-        out_sentences = ''
-        words = text.split(' ')
-        if len(words) < 3:   return text
-        cnt = 1
-        cnt2 = 0
-        for i in range(0, len(words) - 2):
-            combination = words[i] + words[i + 1] + words[i + 2]
-            try:
-                out_sentences = out_sentences + ' ' + self.dic3[combination]
-                cnt = 0
-                cnt2 = 2
-            except KeyError:
-                if cnt == 1 and cnt2 == 0:  out_sentences += ' ' + words[i]
-                else:                       cnt2 -= 1
-                cnt = 1
-        if cnt == 1 and cnt2 == 0:          out_sentences += ' ' + words[-2] + ' ' + words[-1]
-        elif cnt == 1 and cnt2 == 1:        out_sentences += ' ' + words[-1]
-        return out_sentences
-
     def normalize(self, text: str, new_line_elimination: bool = False) -> str:
         """
         Normalizer function, it is the main function in this class.
@@ -155,6 +106,4 @@ class Normalizer:
         """
         cleansed_string = clean_text(text, new_line_elimination).strip()
         return self.space_correction(
-            self.collapse_mavericks(
-                self.bi_window_correction(
-                    self.tri_window_correction(cleansed_string)))).strip()
+            self.collapse_mavericks(cleansed_string)).strip()
