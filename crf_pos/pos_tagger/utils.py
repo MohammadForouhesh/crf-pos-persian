@@ -17,8 +17,8 @@ import re
 token2features = lambda item: [word2features(item, ind) for ind in range(len(item))]
 sent2labels = lambda item: [postag for token, postag in item]
 sent2tokens = lambda item: [token for token, postag in item]
-template = lambda word: "".join([(lambda item: "x" if not item in "آایو"
-                                                   else "a")(char) for char in word])
+template = lambda word: "".join([(lambda item: "x" if not item in "آایو" else "a")(char)
+                                 for char in word])
 isdigit = lambda word: all(map(lambda char: char in "۱۲۳۴۵۶۷۸۹۰1234567890.", word))
 is_all_latin = lambda item: bool(len(re.sub('[a-zA-Z]*', '', item)) == 0)
 remove_after_underline = lambda item: item[:item.find('_')] if '_' in item else item
