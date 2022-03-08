@@ -24,12 +24,24 @@ is_all_latin = lambda item: bool(len(re.sub('[a-zA-Z]*', '', item)) == 0)
 remove_after_underline = lambda item: item[:item.find('_')] if '_' in item else item
 
 
-def ngram(word: str, length: int = 2) -> Generator[str, None, None]:
-    for i in range(len(word) - 1):
-        yield 'word[' + str(i) + ":" + str(i + length) + "]", word[i:i + length]
+def ngram(text: str, length: int = 2) -> Generator[str, None, None]:
+    """
+    function for detecting n-grams.
+    :param text:    Input text, it is in the form of a sentence and it is a string.
+    :param length:  The length at which we want to extract n-grams.
+    :return:        A Generator, it yields words pattern.
+    """
+    for i in range(len(text) - 1):
+        yield 'word[' + str(i) + ":" + str(i + length) + "]", text[i:i + length]
 
 
 def word2features(text: str, index: int) -> Dict[str, Any]:
+    """
+    A feature extraction tool that helps with extraction of different useful information within the given text.
+    :param text:    The input text. A string.
+    :param index:   The place of the word at which we want to move the window back and forth.
+    :return:        A dictionary containing extracted features.
+    """
     W = text[index]
     features = {
         'B': 1.0,
