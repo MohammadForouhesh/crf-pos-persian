@@ -30,7 +30,12 @@ class NormalizerTestCase(unittest.TestCase):
         self.assertEqual(' '.join(self.normalizer.uni_window_correction('بیخبر')),
                          ' '.join(self.normalizer.uni_window_correction('بی‌خبر')))
         self.assertNotEqual(' '.join(self.normalizer.uni_window_correction('بیخبر')),
-                         ' '.join(self.normalizer.uni_window_correction('بی خبر')))
+                            ' '.join(self.normalizer.uni_window_correction('بی خبر')))
+
+    def test_bi_window(self) -> None:
+        self.assertEqual(self.normalizer.bi_window_correction('چشم‌پوشی'),
+                         self.normalizer.bi_window_correction('چشمپوشی'))
+
 
 class CrfTestCase(unittest.TestCase):
     def setUp(self) -> None:
