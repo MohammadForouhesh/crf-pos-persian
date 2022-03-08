@@ -1,3 +1,16 @@
+"""
+Normalizer
+
+..................................................................................................................
+MIT License
+
+Copyright (c) 2021-2023 AUT Iran, Mohammad H Forouhesh
+Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
+..................................................................................................................
+This Module contains the implementation and encapsulation for Text Normalizer, this functionality helps with detecting
+half-spaces.
+"""
+
 from re import sub
 import os
 
