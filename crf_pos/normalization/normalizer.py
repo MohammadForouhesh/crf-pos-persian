@@ -83,11 +83,11 @@ class Normalizer:
         :param text:        The input text (str).
         :return:            The half-spaced corrected text (str).
         """
-        out_sentences = ''
         for word in text.split(' '):
-            try:                out_sentences += ' ' + self.dic1[word]
-            except KeyError:    out_sentences += ' ' + word
-        return out_sentences
+            if word in self.dic1:
+                yield self.dic1[word]
+            else:
+                yield word
 
     def bi_window_correction(self, text: str) -> str:
         """
@@ -146,6 +146,6 @@ class Normalizer:
         """
         normalized_string = clean_text(text, new_line_elimination).strip()
         return self.space_correction(
-            self.uni_window_correction(
+            ' '.join(self.uni_window_correction(
                 self.bi_window_correction(
-                    self.tri_window_correction(normalized_string)))).strip()
+                    self.tri_window_correction(normalized_string))))).strip()
