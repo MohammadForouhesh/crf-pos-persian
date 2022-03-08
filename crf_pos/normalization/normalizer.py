@@ -83,7 +83,7 @@ class Normalizer:
     def vector_mavericks(self, text: str, window_length: int) -> Generator[str, None, None]:
         for word in self.window_sampling(text.split(), window_length):
             if word in self.corrections:                    yield self.corrections[word]
-            # elif word.replace(' ', '') in self.corrections: yield self.corrections[word.replace(' ', '')]
+            elif word.replace(' ', '') in self.corrections: yield self.corrections[word.replace(' ', '')]
             else:                                           yield word
 
     def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str, str, None]:
