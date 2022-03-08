@@ -102,10 +102,10 @@ class Normalizer:
         cnt = 1
         for i in range(0, len(words) - 1):
             combination = words[i] + words[i + 1]
-            try:
+            if combination in self.dic2:
                 out_sentences += ' ' + self.dic2[combination]
                 cnt = 0
-            except KeyError:
+            else:
                 if cnt == 1:    out_sentences += ' ' + words[i]
                 cnt = 1
         if cnt == 1:            out_sentences += ' ' + words[-1]
@@ -144,8 +144,8 @@ class Normalizer:
                                      half-space.
         :return:            A normalized text.
         """
-        normalized_string = clean_text(text, new_line_elimination).strip()
+        cleansed_string = clean_text(text, new_line_elimination).strip()
         return self.space_correction(
             ' '.join(self.uni_window_correction(
                 self.bi_window_correction(
-                    self.tri_window_correction(normalized_string))))).strip()
+                    self.tri_window_correction(cleansed_string))))).strip()
