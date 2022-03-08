@@ -13,20 +13,21 @@ half-spaces.
 
 from re import sub
 import os
+from typing import Dict
 
 from crf_pos.api import downloader
 from crf_pos.normalization.tokenizer import clean_text
 
 
 class Normalizer:
-    def __init__(self, downloading: bool = False):
+    def __init__(self, downloading: bool = False) -> None:
         self.dir_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))) + "/"
         if downloading: self.get_resources()
         self.dic1 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic1_new.txt')
         self.dic2 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic2_new.txt')
         self.dic3 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic3_new.txt')
 
-    def get_resources(self):
+    def get_resources(self) -> None:
         load_dir = 'https://raw.githubusercontent.com/MohammadForouhesh/Parsivar/master/parsivar/resource/normalizer'
         save_dir = self.dir_path + '/model/normalizer/'
         os.makedirs(save_dir, exist_ok=True)
@@ -34,7 +35,7 @@ class Normalizer:
             downloader(path=load_dir + f'/Dic{ind}_new.txt', save_path=save_dir + f'Dic{ind}_new.txt', mode='wb')
 
     @staticmethod
-    def load_dictionary(file_path):
+    def load_dictionary(file_path: str) -> Dict[str, str]:
         dictionary = {}
         with open(file_path, 'r', encoding='utf-8') as file:
             lines = file.readlines()
@@ -99,7 +100,7 @@ class Normalizer:
         elif cnt == 1 and cnt2 == 1:        out_sentences += ' ' + words[-1]
         return out_sentences
 
-    def normalize(self, text: str, new_line_elimination: bool = False):
+    def normalize(self, text: str, new_line_elimination: bool = False) -> str:
         normalized_string = clean_text(text, new_line_elimination).strip()
         return self.space_correction(
             self.space_correction_plus1(
