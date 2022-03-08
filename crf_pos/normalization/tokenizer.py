@@ -44,7 +44,7 @@ def pattern_matching(text: str) -> str:
     return str(patterns.sub(r'', text))
 
 
-def clean_text(text_doc, new_line_elimination):
+def clean_text(text_doc: str, new_line_elimination: str) -> str:
     punctuations = r')(}{:؟!،؛»«.' + r"/<>?.,:;"
     punctuations = '[' + punctuations + string.punctuation + ']'
     punctuations = punctuations.replace("@", "")
