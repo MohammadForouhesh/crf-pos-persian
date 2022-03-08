@@ -1,5 +1,17 @@
 from typing import Union, List, Any, Tuple
 from crf_pos.normalization.normalizer import Normalizer
+"""
+Wapiti Classifier
+
+..................................................................................................................
+MIT License
+
+Copyright (c) 2021-2023 AUT Iran, Mohammad H Forouhesh
+Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
+..................................................................................................................
+This module sole purpose is abstraction, it contains a meta class for Wapiti and CRF classifier.
+"""
+
 from crf_pos.normalization.tokenizer import tokenize_words
 
 
