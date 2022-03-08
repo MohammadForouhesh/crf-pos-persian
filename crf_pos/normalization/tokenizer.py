@@ -1,3 +1,15 @@
+"""
+Tokenizer
+
+..................................................................................................................
+MIT License
+
+Copyright (c) 2021-2023 AUT Iran, Mohammad H Forouhesh
+Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
+..................................................................................................................
+This Module contains the tools and one-line functions used in tokenization process.
+"""
+
 import re
 import string
 from typing import List
