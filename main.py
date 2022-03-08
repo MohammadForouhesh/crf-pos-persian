@@ -26,17 +26,15 @@ class NormalizerTestCase(unittest.TestCase):
         self.assertEqual(self.normalizer.normalize('می باشد'), self.normalizer.normalize('می‌باشد'))
         self.assertEqual(self.normalizer.normalize('می باشد'), self.normalizer.normalize('میباشد'))
 
-    def test_uni_window(self) -> None:
+    def test_collapse_mavericks(self) -> None:
+        self.assertEqual(' '.join(self.normalizer.collapse_mavericks('بیطرفانه')),
+                         ' '.join(self.normalizer.collapse_mavericks('بی‌طرفانه')))
+        # self.assertEqual(' '.join(self.normalizer.collapse_mavericks('بیطرفانه')),
+        #                  ' '.join(self.normalizer.collapse_mavericks('بی طرفانه')))
+
+    def test_moving_mavericks(self) -> None:
         self.assertEqual(' '.join(self.normalizer.moving_mavericks('بیطرفانه')),
                          ' '.join(self.normalizer.moving_mavericks('بی‌طرفانه')))
-        self.assertEqual(' '.join(self.normalizer.moving_mavericks('بیخبر')),
-                         ' '.join(self.normalizer.moving_mavericks('بی‌خبر')))
-        self.assertNotEqual(' '.join(self.normalizer.moving_mavericks('بیخبر')),
-                            ' '.join(self.normalizer.moving_mavericks('بی خبر')))
-
-    def test_bi_window(self) -> None:
-        self.assertEqual(self.normalizer.bi_window_correction('چشم‌پوشی'),
-                         self.normalizer.bi_window_correction('چشمپوشی'))
 
 
 class CrfTestCase(unittest.TestCase):
