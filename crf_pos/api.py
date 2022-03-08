@@ -17,10 +17,12 @@ supported http links are:
 """
 
 import os
+from typing import Union
+
 import requests
 
 
-def downloader(path: str, save_path: str, mode: str):
+def downloader(path: str, save_path: str, mode: str) -> Union[int, None]:
     if os.path.isfile(save_path): return 0
     try:
         model_bin = requests.get(path, allow_redirects=True)
