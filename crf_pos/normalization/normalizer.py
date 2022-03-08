@@ -14,7 +14,7 @@ half-spaces.
 
 from re import sub
 import os
-from typing import Dict
+from typing import Dict, List, Generator
 
 from crf_pos.api import downloader
 from crf_pos.normalization.tokenizer import clean_text
@@ -77,14 +77,20 @@ class Normalizer:
         text = sub(pattern, r'‌\2\3', text)
         return sub(r'( )(شده|نشده)( )', r'‌\2‌', text)
 
+    @staticmethod
+    def window_sampling(tokens: List[str], window_length: int) -> Generator[str, None, None]:
+        while True:
+            try:                yield ' '.join([tokens.pop(0)] + [tokens[_] for _ in range(window_length - 1)])
+            except IndexError:  break
+
     def uni_window_correction(self, text: str) -> str:
         """
         A tool to help with rule-based half space correction using external resources.
         :param text:        The input text (str).
         :return:            The half-spaced corrected text (str).
         """
-        ## refrence_dictionary
-        for word in text.split(' '):
+        ## ToDo refrence_dictionary
+        for word in self.window_sampling(text.split(), 1):
             if word in self.dic1:
                 yield self.dic1[word]
             else:
