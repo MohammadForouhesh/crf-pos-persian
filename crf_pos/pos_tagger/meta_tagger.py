@@ -1,4 +1,4 @@
-from typing import Union, List, Any, Tuple
+from typing import Union, List, Any, Tuple, Generator
 from crf_pos.normalization.normalizer import Normalizer
 """
 Wapiti Classifier
@@ -28,6 +28,6 @@ class MetaTagger:
         pass
 
     @staticmethod
-    def zip_vector(iterable: zip):
+    def zip_vector(iterable: zip) -> Generator[List[zip], None, None]:
         for key, item in iterable:
             yield list(zip(key, item))
