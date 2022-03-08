@@ -27,6 +27,8 @@ class NormalizerTestCase(unittest.TestCase):
         self.assertEqual(self.normalizer.normalize('می باشد'), self.normalizer.normalize('میباشد'))
 
     def test_uni_window(self) -> None:
+        self.assertEqual(' '.join(self.normalizer.uni_window_correction('بیطرفانه')),
+                         ' '.join(self.normalizer.uni_window_correction('بی‌طرفانه')))
         self.assertEqual(' '.join(self.normalizer.uni_window_correction('بیخبر')),
                          ' '.join(self.normalizer.uni_window_correction('بی‌خبر')))
         self.assertNotEqual(' '.join(self.normalizer.uni_window_correction('بیخبر')),
