@@ -1,5 +1,3 @@
-from typing import Union, List, Any, Tuple, Generator
-from crf_pos.normalization.normalizer import Normalizer
 """
 Wapiti Classifier
 
@@ -12,6 +10,8 @@ Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
 This module sole purpose is abstraction, it contains a meta class for Wapiti and CRF classifier.
 """
 
+from typing import Union, List, Any, Tuple, Generator
+from crf_pos.normalization.normalizer import Normalizer
 from crf_pos.normalization.tokenizer import tokenize_words
 
 
