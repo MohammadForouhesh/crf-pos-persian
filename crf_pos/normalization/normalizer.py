@@ -88,7 +88,7 @@ class Normalizer:
             if word in self.dic1:   yield self.dic1[word]
             else:                   yield word
 
-    def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str]:
+    def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str, str, None]:
         # ToDo reference_dictionary
         yield ' '.join(self.vector_mavericks(text, scope))
         if scope > 1: yield from self.moving_mavericks(text, scope - 1)
