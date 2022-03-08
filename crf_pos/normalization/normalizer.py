@@ -88,16 +88,15 @@ class Normalizer:
             if word in self.dic1:   yield self.dic1[word]
             else:                   yield word
 
-    def moving_mavericks(self, text: str, scope: int = 3) -> str:
-        """
-        A tool to help with rule-based half space correction using external resources.
-        :param text:        The input text (str).
-        :param scope:       Maximum window length.
-        :return:            The half-spaced corrected text (str).
-        """
-        ## ToDo refrence_dictionary
-        yield self.vector_mavericks(text, scope)
+    def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str]:
+        # ToDo reference_dictionary
+        yield ' '.join(self.vector_mavericks(text, scope))
         if scope > 1: yield from self.moving_mavericks(text, scope - 1)
+
+    def collapse_mavericks(self, text: str, scope: int = 4) -> str:
+        # ToDo reference_dictionary
+        if scope == 1: return ' '.join(self.vector_mavericks(text, scope))
+        return self.collapse_mavericks(text, scope - 1)
 
     def bi_window_correction(self, text: str) -> str:
         """
@@ -156,6 +155,6 @@ class Normalizer:
         """
         cleansed_string = clean_text(text, new_line_elimination).strip()
         return self.space_correction(
-            ' '.join(self.moving_mavericks(
+            self.collapse_mavericks(
                 self.bi_window_correction(
-                    self.tri_window_correction(cleansed_string))))).strip()
+                    self.tri_window_correction(cleansed_string)))).strip()
