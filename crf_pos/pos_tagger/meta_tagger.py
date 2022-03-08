@@ -3,12 +3,12 @@ from crf_pos.normalization.normalizer import Normalizer
 """
 Wapiti Classifier
 
-..................................................................................................................
+....................................................................................................
 MIT License
 
 Copyright (c) 2021-2023 AUT Iran, Mohammad H Forouhesh
 Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
-..................................................................................................................
+....................................................................................................
 This module sole purpose is abstraction, it contains a meta class for Wapiti and CRF classifier.
 """
 
@@ -47,7 +47,8 @@ class MetaTagger:
         """
         A function that combine to iterables elements together.
         :param iterable:    A zip that contains the zipped format of two iterables.
-        :return:            A Generator containing a list of tuples that consist of elements of each iterable.
+        :return:            A Generator containing a list of tuples that consist of elements of
+                            each iterable.
         """
         for key, item in iterable:
             yield list(zip(key, item))

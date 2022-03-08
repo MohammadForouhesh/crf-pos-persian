@@ -1,12 +1,12 @@
 """
 Utils
 
-..................................................................................................................
+....................................................................................................
 MIT License
 
 Copyright (c) 2021-2023 AUT Iran, Mohammad H Forouhesh
 Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
-..................................................................................................................
+....................................................................................................
 This module contains various tools and one-line functions for Part-of-Speech tagging.
 """
 from typing import Generator, Dict, Any
@@ -17,7 +17,8 @@ import re
 token2features = lambda item: [word2features(item, ind) for ind in range(len(item))]
 sent2labels = lambda item: [postag for token, postag in item]
 sent2tokens = lambda item: [token for token, postag in item]
-template = lambda word: "".join([(lambda item: "x" if not item in "آایو" else "a")(char) for char in word])
+template = lambda word: "".join([(lambda item: "x" if not item in "آایو"
+                                                   else "a")(char) for char in word])
 isdigit = lambda word: all(map(lambda char: char in "۱۲۳۴۵۶۷۸۹۰1234567890.", word))
 is_all_latin = lambda item: bool(len(re.sub('[a-zA-Z]*', '', item)) == 0)
 remove_after_underline = lambda item: item[:item.find('_')] if '_' in item else item
@@ -36,7 +37,8 @@ def ngram(text: str, length: int = 2) -> Generator[str, None, None]:
 
 def word2features(text: str, index: int) -> Dict[str, Any]:
     """
-    A feature extraction tool that helps with extraction of different useful information within the given text.
+    A feature extraction tool that helps with extraction of different useful information
+    within the given text.
     :param text:    The input text. A string.
     :param index:   The place of the word at which we want to move the window back and forth.
     :return:        A dictionary containing extracted features.

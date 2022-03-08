@@ -1,12 +1,12 @@
 """
 Tokenizer
 
-..................................................................................................................
+....................................................................................................
 MIT License
 
 Copyright (c) 2021-2023 AUT Iran, Mohammad H Forouhesh
 Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
-..................................................................................................................
+....................................................................................................
 This Module contains the tools and one-line functions used in tokenization process.
 """
 
@@ -15,7 +15,8 @@ import string
 from typing import List
 
 
-tokenize_words = lambda text: [item.strip("\u200c") for item in text.strip().split() if len(item.strip("\u200c")) != 0]
+tokenize_words = lambda text: [item.strip("\u200c") for item in text.strip().split()
+                               if len(item.strip("\u200c")) != 0]
 add_tab = lambda text: str(" " + text.group().strip(' ').strip('\n') + "\t\t")
 triplets2tagged_pairs = lambda iob_sent: [((word, pos), chunk) for word, pos, chunk in iob_sent]
 add_space = lambda text: str(" " + text.group().strip(' ') + " ")

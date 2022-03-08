@@ -1,12 +1,12 @@
 """
 API
 
-..................................................................................................................
+....................................................................................................
 MIT License
 
 Copyright (c) 2021-2023 AUT Iran, Mohammad H Forouhesh
 Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
-..................................................................................................................
+....................................................................................................
 This module contains tools to download resources over http connections.
 supported http links are:
     - https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/UPC_full_model_wapiti

@@ -1,12 +1,12 @@
 """
 Main
 
-..................................................................................................................
+....................................................................................................
 MIT License
 
 Copyright (c) 2021-2023 AUT Iran, Mohammad H Forouhesh
 Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
-..................................................................................................................
+....................................................................................................
 This module serves as unit testing for various functionalities in the code.
 """
 
@@ -33,8 +33,9 @@ class CrfTestCase(unittest.TestCase):
         os.makedirs(save_dir, exist_ok=True)
         downloader(path=load_dir, save_path=save_dir + 'perpos-v1.model', mode='wb')
         self.tagger = CrfPosTagger(save_dir + 'perpos-v1.model')
-        self.all_tags = ('N', 'P', 'V', 'ADV', 'ADVe', 'RES', 'RESe', 'DET', 'DETe', 'AJ', 'AJe', 'CL', 'INT', 'CONJ',
-                         'CONJe', 'POSTP', 'PRO', 'PROe', 'NUM', 'NUMe', 'PUNC', 'Ne', 'Pe')
+        self.all_tags = ('N', 'P', 'V', 'ADV', 'ADVe', 'RES', 'RESe', 'DET', 'DETe', 'AJ', 'AJe',
+                         'CL', 'INT', 'CONJ', 'CONJe', 'POSTP', 'PRO', 'PROe', 'NUM', 'NUMe',
+                         'PUNC', 'Ne', 'Pe')
 
     def test_crf_api(self) -> None:
         self.assertRaises(Exception, downloader, path='wrong-path')

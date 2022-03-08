@@ -1,13 +1,14 @@
 """
 Normalizer
 
-..................................................................................................................
+....................................................................................................
 MIT License
 
 Copyright (c) 2021-2023 AUT Iran, Mohammad H Forouhesh
 Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
-..................................................................................................................
-This Module contains the implementation and encapsulation for Text Normalizer, this functionality helps with detecting
+....................................................................................................
+This Module contains the implementation and encapsulation for Text Normalizer, this functionality
+helps with detecting
 half-spaces.
 """
 
@@ -24,7 +25,10 @@ class Normalizer:
     A native persian text normalizer to help detecting half-spaces.
     """
     def __init__(self, downloading: bool = False) -> None:
-        self.dir_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__)))) + "/"
+        self.dir_path = os.path.dirname(
+            os.path.dirname(
+                os.path.dirname(
+                    os.path.realpath(__file__)))) + "/"
         if downloading: self.get_resources()
         self.dic1 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic1_new.txt')
         self.dic2 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic2_new.txt')
@@ -136,7 +140,8 @@ class Normalizer:
         """
         Normalizer function, it is the main function in this class.
         :param text:        The input text.
-        :param new_line_elimination: A boolean, controls whether to use another character for half-space
+        :param new_line_elimination: A boolean, controls whether to use another character for
+                                     half-space.
         :return:            A normalized text.
         """
         normalized_string = clean_text(text, new_line_elimination).strip()

@@ -1,12 +1,12 @@
 """
 CRF Classifier
 
-..................................................................................................................
+....................................................................................................
 MIT License
 
 Copyright (c) 2021-2023 AUT Iran, Mohammad H Forouhesh
 Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
-..................................................................................................................
+....................................................................................................
 This Module contains the implementation and encapsulation for Conditional Random Field classifier.
 """
 
@@ -27,8 +27,8 @@ class CrfPosTagger(MetaTagger):
 
     def parse(self, token_list: List[str]) -> List[List[Tuple[Any, Any]]]:
         """
-        Primary function that overwrite the same method from the super class. This function is responsible for the logic
-        behind the model.
+        Primary function that overwrite the same method from the super class. This function is
+        responsible for the logic behind the model.
         :param token_list:  A list of tokens (strings)
         :return:            A list of list of extracted part of speeches and their related tokens.
         """
