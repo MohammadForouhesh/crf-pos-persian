@@ -109,4 +109,4 @@ class Normalizer:
         """
         cleansed_string = clean_text(text, new_line_elimination).strip()
         return self.space_correction(
-            self.collapse_mavericks(cleansed_string)).strip()
+            list(self.moving_mavericks(cleansed_string))[-1]).strip()
