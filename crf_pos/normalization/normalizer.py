@@ -81,14 +81,16 @@ class Normalizer:
             except IndexError:  break
 
     def vector_mavericks(self, text: str, window_length: int) -> Generator[str, None, None]:
+        print('text -> ', text)
         for word in self.window_sampling(text.split(), window_length):
+            print('word -> ', word)
             word_cat = word.replace(' ', '')
+            print('word_cat -> ', word_cat)
             if word in self.corrections:        yield self.corrections[word]
             elif word_cat in self.corrections:  yield self.corrections[word_cat]
             else:                               yield word
 
     def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str, None, None]:
-        print('moving_mavericks: ', text, scope)
         yield ' '.join(self.vector_mavericks(text, scope))
         if scope > 1: yield from self.moving_mavericks(text, scope - 1)
 
