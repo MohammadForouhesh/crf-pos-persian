@@ -11,7 +11,7 @@ This Module contains the implementation and encapsulation for Text Normalizer, t
 helps with detecting
 half-spaces.
 """
-
+import itertools
 from re import sub
 import os
 from typing import Dict, List, Generator
@@ -76,26 +76,25 @@ class Normalizer:
 
     @staticmethod
     def window_sampling(tokens: List[str], window_length: int) -> Generator[str, None, None]:
+        if len(tokens) < window_length: yield ' '.join(tokens)
         while True:
             try:                yield ' '.join([tokens.pop(0)] + [tokens[_] for _ in range(window_length - 1)])
             except IndexError:  break
 
-    @staticmethod
-    def collapse_mavericks(mavericks: Generator[str, None, None]) -> str:
-        return max([(item, item.count('\u200c')) for item in mavericks], key=lambda item: item[1])[0]
-
     def vector_mavericks(self, text: str, window_length: int) -> Generator[str, None, None]:
-        print('text -> ', text)
-        for word in self.window_sampling(text.split(), window_length):
-            print('word -> ', word)
-            word_cat = word.replace(' ', '')
-            print('word_cat -> ', word_cat)
-            if word in self.corrections:        yield self.corrections[word]
-            elif word_cat in self.corrections:  yield self.corrections[word_cat]
-            else:                               yield word
+        iter_sample = iter(self.window_sampling(text.split(), window_length))
+        for word in iter_sample:
+            try:
+                yield self.corrections[word.replace(' ', '')]
+                for ind in range(0, window_length-2):   next(iter_sample, None)
+                print(f'success@{word}')
+            except KeyError:
+                yield word
 
     def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str, None, None]:
-        yield self.collapse_mavericks(self.vector_mavericks(text, scope))
+        root = self.vector_mavericks(text, scope)
+        text = ' '.join(root) if len(''.join(root)) != 0 else text
+        yield text
         if scope > 1: yield from self.moving_mavericks(text, scope - 1)
 
     def normalize(self, text: str, new_line_elimination: bool = False) -> str:

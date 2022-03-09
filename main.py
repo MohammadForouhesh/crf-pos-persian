@@ -25,12 +25,13 @@ class NormalizerTestCase(unittest.TestCase):
     def test_normalize(self) -> None:
         self.assertEqual(self.normalizer.normalize('می باشد'), self.normalizer.normalize('می‌باشد'))
         self.assertEqual(self.normalizer.normalize('می باشد'), self.normalizer.normalize('میباشد'))
+        self.assertEqual(self.normalizer.normalize('تامینکنندگان'), self.normalizer.normalize('تامین کنندگان'))
 
     def test_moving_mavericks(self) -> None:
-        self.assertEqual(list(self.normalizer.moving_mavericks('رئيس جمهور ایران میباشد')),
-                         list(self.normalizer.moving_mavericks('رئيس‌جمهور ایران می باشد')))
-        self.assertEqual(list(self.normalizer.moving_mavericks('بی طرفانه')),
-                         list(self.normalizer.moving_mavericks('بیطرفانه')))
+        self.assertEqual(list(self.normalizer.moving_mavericks('رئيس جمهور ایران میباشد'))[-1],
+                         list(self.normalizer.moving_mavericks('رئيس‌جمهور ایران می باشد'))[-1])
+        self.assertEqual(list(self.normalizer.moving_mavericks('بی طرفانه'))[-1],
+                         list(self.normalizer.moving_mavericks('بیطرفانه'))[-1])
 
 
 class CrfTestCase(unittest.TestCase):
