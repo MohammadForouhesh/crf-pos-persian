@@ -37,7 +37,7 @@ class Normalizer:
         A tool to download required resources over internet.
         :return:    None.
         """
-        load_dir = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/corrections.text'
+        load_dir = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/corrections.txt'
         save_dir = self.dir_path + '/model/normalizer/'
         os.makedirs(save_dir, exist_ok=True)
         downloader(path=load_dir, save_path=save_dir + 'corrections.txt', mode='wb')
