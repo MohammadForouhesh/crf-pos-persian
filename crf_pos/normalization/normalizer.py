@@ -89,14 +89,12 @@ class Normalizer:
 
     def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str, None, None]:
         print('moving_mavericks: ', text, scope)
-        text = ' '.join(self.vector_mavericks(text, scope))
-        yield text
+        yield ' '.join(self.vector_mavericks(text, scope))
         if scope > 1: yield from self.moving_mavericks(text, scope - 1)
 
     def collapse_mavericks(self, text: str, scope: int = 4) -> str:
         print('collapse_mavericks: ', text, scope)
-        text = ' '.join(self.vector_mavericks(text, scope))
-        if scope == 1: return text
+        if scope == 1: return ' '.join(self.vector_mavericks(text, scope))
         return self.collapse_mavericks(text, scope - 1)
 
     def normalize(self, text: str, new_line_elimination: bool = False) -> str:

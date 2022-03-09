@@ -62,7 +62,8 @@ class CrfTestCase(unittest.TestCase):
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'], list)
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'][0], tuple)
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'][0][1], str)
-        for item in self.tagger['ابراهیم رئیسی رئيس‌جمهور جمهوری اسلامی ایران میباشد']:
+        for item in self.tagger['ابراهیم رئیسی رئيس جمهور جمهوری اسلامی ایران میباشد']:
+            print(item)
             self.assertIn(member=item[1], container=self.all_tags)
 
     def test_crf_ai(self) -> None:
