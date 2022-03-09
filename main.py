@@ -86,6 +86,7 @@ class WapitiTestCase(unittest.TestCase):
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'][0], tuple)
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'][0][1], str)
         for item in self.tagger['او وقتی رئيس‌جمهور جمهوری اسلامی ایران میباشد مملکت معمولا ویران است']:
+            print(item)
             self.assertIn(member=item[1], container=self.all_tags)
 
     def test_wapiti_ai(self) -> None:
