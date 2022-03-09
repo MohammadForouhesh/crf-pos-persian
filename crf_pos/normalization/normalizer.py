@@ -81,9 +81,9 @@ class Normalizer:
             except IndexError:  break
 
     @staticmethod
-    def collapse_mavericks(mavericks: Generator[str]) -> str:
+    def collapse_mavericks(mavericks: Generator[str, None, None]) -> str:
         return max([(item, item.count('\u200c')) for item in mavericks], key=lambda item: item[1])[0]
-    
+
     def vector_mavericks(self, text: str, window_length: int) -> Generator[str, None, None]:
         print('text -> ', text)
         for word in self.window_sampling(text.split(), window_length):
