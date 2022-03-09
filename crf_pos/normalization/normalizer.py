@@ -11,10 +11,10 @@ This Module contains the implementation and encapsulation for Text Normalizer, t
 helps with detecting
 half-spaces.
 """
-
+import itertools
 from re import sub
 import os
-from typing import Dict
+from typing import Dict, List, Generator
 
 from crf_pos.api import downloader
 from crf_pos.normalization.tokenizer import clean_text
@@ -30,20 +30,17 @@ class Normalizer:
                 os.path.dirname(
                     os.path.realpath(__file__)))) + "/"
         if downloading: self.get_resources()
-        self.dic1 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic1_new.txt')
-        self.dic2 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic2_new.txt')
-        self.dic3 = self.load_dictionary(self.dir_path + 'model/normalizer/Dic3_new.txt')
+        self.corrections = self.load_dictionary(self.dir_path + 'model/normalizer/corrections.txt')
 
     def get_resources(self) -> None:
         """
         A tool to download required resources over internet.
         :return:    None.
         """
-        load_dir = 'https://raw.githubusercontent.com/MohammadForouhesh/Parsivar/master/parsivar/resource/normalizer'
+        load_dir = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/corrections.txt'
         save_dir = self.dir_path + '/model/normalizer/'
         os.makedirs(save_dir, exist_ok=True)
-        for ind in range(1, 4):
-            downloader(path=load_dir + f'/Dic{ind}_new.txt', save_path=save_dir + f'Dic{ind}_new.txt', mode='wb')
+        downloader(path=load_dir, save_path=save_dir + 'corrections.txt', mode='wb')
 
     @staticmethod
     def load_dictionary(file_path: str) -> Dict[str, str]:
@@ -56,7 +53,7 @@ class Normalizer:
         with open(file_path, 'r', encoding='utf-8') as file:
             lines = file.readlines()
             for words in lines:
-                word = words.split(' ')
+                word = words.replace('\ufeff', '').split(' ')
                 dictionary[word[0].strip()] = sub('\n', '', word[1].strip())
         return dictionary
 
@@ -77,64 +74,30 @@ class Normalizer:
         text = sub(pattern, r'‌\2\3', text)
         return sub(r'( )(شده|نشده)( )', r'‌\2‌', text)
 
-    def uni_window_correction(self, text: str) -> str:
-        """
-        A tool to help with rule-based half space correction using external resources.
-        :param text:        The input text (str).
-        :return:            The half-spaced corrected text (str).
-        """
-        out_sentences = ''
-        for word in text.split(' '):
-            try:                out_sentences += ' ' + self.dic1[word]
-            except KeyError:    out_sentences += ' ' + word
-        return out_sentences
+    @staticmethod
+    def window_sampling(tokens: List[str], window_length: int) -> Generator[str, None, None]:
+        if len(tokens) < window_length: yield ' '.join(tokens)
+        while True:
+            try:                yield ' '.join([tokens.pop(0)] + [tokens[_] for _ in range(window_length - 1)])
+            except IndexError:  break
 
-    def bi_window_correction(self, text: str) -> str:
-        """
-        A tool to help with rule-based half space correction using external resources.
-        :param text:        The input text (str).
-        :return:            The half-spaced corrected text (str).
-        """
-        out_sentences = ''
-        words = text.split(' ')
-        if len(words) < 2:
-            return text
-        cnt = 1
-        for i in range(0, len(words) - 1):
-            combination = words[i] + words[i + 1]
+    def vector_mavericks(self, text: str, window_length: int) -> Generator[str, None, None]:
+        iter_sample = iter(self.window_sampling(text.replace('\u200c', ' ').split(), window_length))
+        for word in iter_sample:
             try:
-                out_sentences += ' ' + self.dic2[combination]
-                cnt = 0
-            except KeyError:
-                if cnt == 1:    out_sentences += ' ' + words[i]
-                cnt = 1
-        if cnt == 1:            out_sentences += ' ' + words[-1]
-        return out_sentences
+                yield self.corrections[word.replace(' ', '')]
+                for ind in range(0, window_length - 1):   next(iter_sample, None)
+            except:
+                try:    yield self.corrections[word.split()[0]]
+                except: yield word.split()[0]
 
-    def tri_window_correction(self, text: str) -> str:
-        """
-        A tool to help with rule-based half space correction using external resources.
-        :param text:        The input text (str).
-        :return:            The half-spaced corrected text (str).
-        """
-        out_sentences = ''
-        words = text.split(' ')
-        if len(words) < 3:   return text
-        cnt = 1
-        cnt2 = 0
-        for i in range(0, len(words) - 2):
-            combination = words[i] + words[i + 1] + words[i + 2]
-            try:
-                out_sentences = out_sentences + ' ' + self.dic3[combination]
-                cnt = 0
-                cnt2 = 2
-            except KeyError:
-                if cnt == 1 and cnt2 == 0:  out_sentences += ' ' + words[i]
-                else:                       cnt2 -= 1
-                cnt = 1
-        if cnt == 1 and cnt2 == 0:          out_sentences += ' ' + words[-2] + ' ' + words[-1]
-        elif cnt == 1 and cnt2 == 1:        out_sentences += ' ' + words[-1]
-        return out_sentences
+    def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str, None, None]:
+        yield self.vector_mavericks(text, scope)
+        if scope > 1: yield from self.moving_mavericks(text, scope - 1)
+
+    def collapse_mavericks(self, text: str) -> str:
+        mavericks_cascades = list(map(lambda item: ' '.join(item), self.moving_mavericks(text)))
+        return sorted(mavericks_cascades, key=lambda item: item.count('\u200c'))[-1]
 
     def normalize(self, text: str, new_line_elimination: bool = False) -> str:
         """
@@ -144,8 +107,5 @@ class Normalizer:
                                      half-space.
         :return:            A normalized text.
         """
-        normalized_string = clean_text(text, new_line_elimination).strip()
-        return self.space_correction(
-            self.uni_window_correction(
-                self.bi_window_correction(
-                    self.tri_window_correction(normalized_string)))).strip()
+        cleansed_string = clean_text(text, new_line_elimination).strip()
+        return self.space_correction(self.collapse_mavericks(cleansed_string)).strip()

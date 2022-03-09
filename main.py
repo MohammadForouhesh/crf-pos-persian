@@ -24,6 +24,14 @@ class NormalizerTestCase(unittest.TestCase):
 
     def test_normalize(self) -> None:
         self.assertEqual(self.normalizer.normalize('می باشد'), self.normalizer.normalize('می‌باشد'))
+        self.assertEqual(self.normalizer.normalize('می باشد'), self.normalizer.normalize('میباشد'))
+        self.assertEqual(self.normalizer.normalize('تامینکنندگان'), self.normalizer.normalize('تامین کنندگان'))
+
+    def test_moving_mavericks(self) -> None:
+        self.assertEqual(self.normalizer.collapse_mavericks('رئيس جمهور ایران میباشد'),
+                         self.normalizer.collapse_mavericks('رئيس‌جمهور ایران می باشد'))
+        self.assertEqual(self.normalizer.collapse_mavericks('بی طرفانه'),
+                         self.normalizer.collapse_mavericks('بیطرفانه'))
 
 
 class CrfTestCase(unittest.TestCase):
@@ -42,14 +50,15 @@ class CrfTestCase(unittest.TestCase):
 
     def test_crf_normalized_verb_tagging(self) -> None:
         self.assertEqual(self.tagger['می باشد'], self.tagger['می‌باشد'])
-        self.assertNotEqual(self.tagger['نهاد ریاست جمهوری'], self.tagger['نهاد ریاست‌جمهوری'])
+        self.assertEqual(self.tagger['نهاد ریاست جمهوری'], self.tagger['نهاد ریاست‌جمهوری'])
 
     def test_crf_tagger(self) -> None:
         self.assertIsInstance(self.tagger['رئيس‌جمهور'], list)
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'], list)
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'][0], tuple)
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'][0][1], str)
-        for item in self.tagger['ابراهیم رئیسی رئيس‌جمهور جمهوری اسلامی ایران میباشد']:
+        for item in self.tagger['ابراهیم رئیسی رئيس جمهور جمهوری اسلامی ایران میباشد']:
+            print(item)
             self.assertIn(member=item[1], container=self.all_tags)
 
     def test_crf_ai(self) -> None:
@@ -67,14 +76,15 @@ class WapitiTestCase(unittest.TestCase):
 
     def test_wapiti_normalizer(self) -> None:
         self.assertEqual(self.tagger['می باشد'], self.tagger['می‌باشد'])
-        self.assertNotEqual(self.tagger['نهاد ریاست جمهوری'], self.tagger['نهاد ریاست‌جمهوری'])
+        self.assertEqual(self.tagger['نهاد ریاست جمهوری'], self.tagger['نهاد ریاست‌جمهوری'])
 
     def test_wapiti_tagger(self) -> None:
         self.assertIsInstance(self.tagger['رئيس جمهور'], list)
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'], list)
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'][0], tuple)
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'][0][1], str)
-        for item in self.tagger['او وقتی رئيس‌جمهور جمهوری اسلامی ایران میباشد مملکت معمولا ویران است']:
+        for item in self.tagger['او وقتی رئيس جمهور جمهوری اسلامی ایران میباشد مملکت معمولا ویران است']:
+            print(item)
             self.assertIn(member=item[1], container=self.all_tags)
 
     def test_wapiti_ai(self) -> None:
