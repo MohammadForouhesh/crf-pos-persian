@@ -28,7 +28,7 @@ class MetaTagger:
         :param item:    An input text/list, the preferred input type is string.
         :return:        A List of tuples including a word and its part of speech.
         """
-        if isinstance(item, str):   item = self.norm.normalize(item)
+        if isinstance(item, str):   item = self.norm.normalize(item).split()
         return self.parse([item])[0]
 
     ## ToDo get_resources.
