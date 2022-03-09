@@ -55,6 +55,7 @@ class Normalizer:
             for words in lines:
                 word = words.split(' ')
                 dictionary[word[0].strip()] = sub('\n', '', word[1].strip())
+        print(dictionary)
         return dictionary
 
     @staticmethod
@@ -83,8 +84,9 @@ class Normalizer:
     def vector_mavericks(self, text: str, window_length: int) -> Generator[str, None, None]:
         for word in self.window_sampling(text.split(), window_length):
             word_cat = word.replace(' ', '')
-            if word in self.corrections:        print(word); yield self.corrections[word]
-            elif word_cat in self.corrections:  print(word_cat); yield self.corrections[word_cat]
+            print('word_cat: ', word_cat)
+            if word in self.corrections:        yield self.corrections[word]
+            elif word_cat in self.corrections:  yield self.corrections[word_cat]
             else:                               yield word
 
     def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str, str, None]:
