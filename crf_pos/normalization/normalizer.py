@@ -91,6 +91,7 @@ class Normalizer:
             else:                               yield word
 
     def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str, None, None]:
+        print('moving_mavericks: ', text, scope)
         yield ' '.join(self.vector_mavericks(text, scope))
         if scope > 1: yield from self.moving_mavericks(text, scope - 1)
 

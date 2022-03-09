@@ -33,8 +33,8 @@ class NormalizerTestCase(unittest.TestCase):
                          self.normalizer.collapse_mavericks('بی طرفانه'))
 
     def test_moving_mavericks(self) -> None:
-        self.assertEqual(list(self.normalizer.moving_mavericks('بیطرفانه'))[-1],
-                         list(self.normalizer.moving_mavericks('بی‌طرفانه'))[-1])
+        self.assertEqual(list(self.normalizer.moving_mavericks('رئيس جمهور ایران میباشد'))[-1],
+                         list(self.normalizer.moving_mavericks('رئيس‌جمهور ایران می باشد'))[-1])
         self.assertEqual(list(self.normalizer.moving_mavericks('بی طرفانه'))[-1],
                          list(self.normalizer.moving_mavericks('بیطرفانه'))[-1])
 
@@ -88,9 +88,10 @@ class WapitiTestCase(unittest.TestCase):
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'], list)
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'][0], tuple)
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'][0][1], str)
-        for item in self.tagger['او وقتی رئيس‌جمهور جمهوری اسلامی ایران میباشد مملکت معمولا ویران است']:
+        for item in self.tagger['او وقتی رئيس جمهور جمهوری اسلامی ایران میباشد مملکت معمولا ویران است']:
             print(item)
             self.assertIn(member=item[1], container=self.all_tags)
+        raise
 
     def test_wapiti_ai(self) -> None:
         self.assertIn(self.tagger['رئيس‌جمهور'][0][1], 'Ne')
