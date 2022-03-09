@@ -31,6 +31,8 @@ class NormalizerTestCase(unittest.TestCase):
                          self.normalizer.collapse_mavericks('بی‌طرفانه'))
         self.assertEqual(self.normalizer.collapse_mavericks('بیطرفانه'),
                          self.normalizer.collapse_mavericks('بی طرفانه'))
+        self.assertEqual(self.normalizer.collapse_mavericks('رئيس جمهور ایران میباشد'),
+                         self.normalizer.collapse_mavericks('رئيس‌جمهور ایران می باشد'))
 
     def test_moving_mavericks(self) -> None:
         self.assertEqual(list(self.normalizer.moving_mavericks('رئيس جمهور ایران میباشد'))[-1],
