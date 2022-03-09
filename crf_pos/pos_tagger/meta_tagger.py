@@ -12,7 +12,6 @@ This module sole purpose is abstraction, it contains a meta class for Wapiti and
 
 from typing import Union, List, Any, Tuple, Generator
 from crf_pos.normalization.normalizer import Normalizer
-from crf_pos.normalization.tokenizer import tokenize_words
 
 
 class MetaTagger:
@@ -29,7 +28,7 @@ class MetaTagger:
         :param item:    An input text/list, the preferred input type is string.
         :return:        A List of tuples including a word and its part of speech.
         """
-        if isinstance(item, str):   item = tokenize_words(self.norm.normalize(item))
+        if isinstance(item, str):   item = self.norm.normalize(item)
         return self.parse([item])[0]
 
     ## ToDo get_resources.
