@@ -53,9 +53,8 @@ class Normalizer:
         with open(file_path, 'r', encoding='utf-8') as file:
             lines = file.readlines()
             for words in lines:
-                word = words.split(' ')
+                word = words.replace('\ufeff', '').split(' ')
                 dictionary[word[0].strip()] = sub('\n', '', word[1].strip())
-        print(dictionary)
         return dictionary
 
     @staticmethod
@@ -84,19 +83,17 @@ class Normalizer:
     def vector_mavericks(self, text: str, window_length: int) -> Generator[str, None, None]:
         for word in self.window_sampling(text.split(), window_length):
             word_cat = word.replace(' ', '')
-            print(word)
-            print('word_cat: ', word_cat)
             if word in self.corrections:        yield self.corrections[word]
             elif word_cat in self.corrections:  yield self.corrections[word_cat]
             else:                               yield word
 
     def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str, str, None]:
-        # ToDo reference_dictionary
+        print('moving_mavericks: ', text)
         yield ' '.join(self.vector_mavericks(text, scope))
         if scope > 1: yield from self.moving_mavericks(text, scope - 1)
 
     def collapse_mavericks(self, text: str, scope: int = 4) -> str:
-        # ToDo reference_dictionary
+        print('collapse_mavericks: ', text)
         if scope == 1: return ' '.join(self.vector_mavericks(text, scope))
         return self.collapse_mavericks(text, scope - 1)
 
