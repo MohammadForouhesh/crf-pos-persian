@@ -82,20 +82,22 @@ class Normalizer:
             except IndexError:  break
 
     def vector_mavericks(self, text: str, window_length: int) -> Generator[str, None, None]:
-        iter_sample = iter(self.window_sampling(text.split(), window_length))
+        iter_sample = iter(self.window_sampling(text.replace('\u200c', ' ').split(), window_length))
         for word in iter_sample:
             try:
                 yield self.corrections[word.replace(' ', '')]
-                for ind in range(0, window_length-2):   next(iter_sample, None)
-                print(f'success@{word}')
-            except KeyError:
-                yield word
+                for ind in range(0, window_length - 1):   next(iter_sample, None)
+            except:
+                try:    yield self.corrections[word.split()[0]]
+                except: yield word.split()[0]
 
     def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str, None, None]:
-        root = self.vector_mavericks(text, scope)
-        text = ' '.join(root) if len(''.join(root)) != 0 else text
-        yield text
+        yield self.vector_mavericks(text, scope)
         if scope > 1: yield from self.moving_mavericks(text, scope - 1)
+
+    def collapse_mavericks(self, text: str) -> str:
+        mavericks_cascades = list(map(lambda item: ' '.join(item), self.moving_mavericks(text)))
+        return sorted(mavericks_cascades, key=lambda item: item.count('\u200c'))[-1]
 
     def normalize(self, text: str, new_line_elimination: bool = False) -> str:
         """
@@ -106,5 +108,4 @@ class Normalizer:
         :return:            A normalized text.
         """
         cleansed_string = clean_text(text, new_line_elimination).strip()
-        return self.space_correction(
-            list(self.moving_mavericks(cleansed_string))[-1]).strip()
+        return self.space_correction(self.collapse_mavericks(cleansed_string)).strip()

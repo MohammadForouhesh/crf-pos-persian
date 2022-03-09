@@ -28,10 +28,10 @@ class NormalizerTestCase(unittest.TestCase):
         self.assertEqual(self.normalizer.normalize('تامینکنندگان'), self.normalizer.normalize('تامین کنندگان'))
 
     def test_moving_mavericks(self) -> None:
-        self.assertEqual(list(self.normalizer.moving_mavericks('رئيس جمهور ایران میباشد'))[-1],
-                         list(self.normalizer.moving_mavericks('رئيس‌جمهور ایران می باشد'))[-1])
-        self.assertEqual(list(self.normalizer.moving_mavericks('بی طرفانه'))[-1],
-                         list(self.normalizer.moving_mavericks('بیطرفانه'))[-1])
+        self.assertEqual(self.normalizer.collapse_mavericks('رئيس جمهور ایران میباشد'),
+                         self.normalizer.collapse_mavericks('رئيس‌جمهور ایران می باشد'))
+        self.assertEqual(self.normalizer.collapse_mavericks('بی طرفانه'),
+                         self.normalizer.collapse_mavericks('بیطرفانه'))
 
 
 class CrfTestCase(unittest.TestCase):
@@ -50,7 +50,7 @@ class CrfTestCase(unittest.TestCase):
 
     def test_crf_normalized_verb_tagging(self) -> None:
         self.assertEqual(self.tagger['می باشد'], self.tagger['می‌باشد'])
-        self.assertNotEqual(self.tagger['نهاد ریاست جمهوری'], self.tagger['نهاد ریاست‌جمهوری'])
+        self.assertEqual(self.tagger['نهاد ریاست جمهوری'], self.tagger['نهاد ریاست‌جمهوری'])
 
     def test_crf_tagger(self) -> None:
         self.assertIsInstance(self.tagger['رئيس‌جمهور'], list)
@@ -76,7 +76,7 @@ class WapitiTestCase(unittest.TestCase):
 
     def test_wapiti_normalizer(self) -> None:
         self.assertEqual(self.tagger['می باشد'], self.tagger['می‌باشد'])
-        self.assertNotEqual(self.tagger['نهاد ریاست جمهوری'], self.tagger['نهاد ریاست‌جمهوری'])
+        self.assertEqual(self.tagger['نهاد ریاست جمهوری'], self.tagger['نهاد ریاست‌جمهوری'])
 
     def test_wapiti_tagger(self) -> None:
         self.assertIsInstance(self.tagger['رئيس جمهور'], list)
@@ -86,7 +86,6 @@ class WapitiTestCase(unittest.TestCase):
         for item in self.tagger['او وقتی رئيس جمهور جمهوری اسلامی ایران میباشد مملکت معمولا ویران است']:
             print(item)
             self.assertIn(member=item[1], container=self.all_tags)
-        raise
 
     def test_wapiti_ai(self) -> None:
         self.assertIn(self.tagger['رئيس‌جمهور'][0][1], 'Ne')
