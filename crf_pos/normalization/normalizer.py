@@ -82,9 +82,8 @@ class Normalizer:
 
     def vector_mavericks(self, text: str, window_length: int) -> Generator[str, None, None]:
         for word in self.window_sampling(text.split(), window_length):
-            print(word)
             word_cat = word.replace(' ', '')
-            if word in self.corrections:        yield self.corrections[word]
+            if word in self.corrections:        print(word); yield self.corrections[word]
             elif word_cat in self.corrections:  print(word_cat); yield self.corrections[word_cat]
             else:                               yield word
 
