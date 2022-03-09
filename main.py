@@ -33,10 +33,10 @@ class NormalizerTestCase(unittest.TestCase):
                          self.normalizer.collapse_mavericks('بی طرفانه'))
 
     def test_moving_mavericks(self) -> None:
-        self.assertEqual(' '.join(self.normalizer.moving_mavericks('بیطرفانه')),
-                         ' '.join(self.normalizer.moving_mavericks('بی‌طرفانه')))
-        self.assertEqual(' '.join(self.normalizer.moving_mavericks('بی طرفانه')),
-                         ' '.join(self.normalizer.moving_mavericks('بیطرفانه')))
+        self.assertEqual(list(self.normalizer.moving_mavericks('بیطرفانه'))[-1],
+                         list(self.normalizer.moving_mavericks('بی‌طرفانه'))[-1])
+        self.assertEqual(list(self.normalizer.moving_mavericks('بی طرفانه'))[-1],
+                         list(self.normalizer.moving_mavericks('بیطرفانه'))[-1])
 
 
 class CrfTestCase(unittest.TestCase):
