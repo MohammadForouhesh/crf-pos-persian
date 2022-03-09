@@ -80,26 +80,23 @@ class Normalizer:
             try:                yield ' '.join([tokens.pop(0)] + [tokens[_] for _ in range(window_length - 1)])
             except IndexError:  break
 
-    def vector_mavericks(self, text: str, window_length: int, lock: bool = False) -> Generator[str, None, None]:
+    @staticmethod
+    def collapse_mavericks(mavericks: Generator[str]) -> str:
+        return max([(item, item.count('\u200c')) for item in mavericks], key=lambda item: item[1])[0]
+    
+    def vector_mavericks(self, text: str, window_length: int) -> Generator[str, None, None]:
         print('text -> ', text)
-        for ind, word in enumerate(self.window_sampling(text.split(), window_length)):
+        for word in self.window_sampling(text.split(), window_length):
             print('word -> ', word)
             word_cat = word.replace(' ', '')
             print('word_cat -> ', word_cat)
-            if word in self.corrections:            yield self.corrections[word]
-            elif word_cat in self.corrections:      yield self.corrections[word_cat]
-            elif lock and ind % window_length != 0: continue
-            else:                                   yield word
+            if word in self.corrections:        yield self.corrections[word]
+            elif word_cat in self.corrections:  yield self.corrections[word_cat]
+            else:                               yield word
 
     def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str, None, None]:
-        text = ' '.join(self.vector_mavericks(text, scope, lock=True))
-        yield text
+        yield self.collapse_mavericks(self.vector_mavericks(text, scope))
         if scope > 1: yield from self.moving_mavericks(text, scope - 1)
-
-    def collapse_mavericks(self, text: str, scope: int = 4) -> str:
-        text = ' '.join(self.vector_mavericks(text, scope))
-        if scope == 1: return text
-        return self.collapse_mavericks(text, scope - 1)
 
     def normalize(self, text: str, new_line_elimination: bool = False) -> str:
         """
