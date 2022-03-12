@@ -10,6 +10,7 @@ Copyright (c) 2021-2022 MetoData.ai, Mohammad H Forouhesh
 This module sole purpose is abstraction, it contains a meta class for Wapiti and CRF classifier.
 """
 
+import os
 from typing import Union, List, Any, Tuple, Generator
 from crf_pos.normalization.normalizer import Normalizer
 
@@ -19,6 +20,10 @@ class MetaTagger:
     Part-of-Speech taggers meta class abstraction.
     """
     def __init__(self) -> None:
+        self.dir_path = os.path.dirname(
+            os.path.dirname(
+                os.path.dirname(
+                    os.path.realpath(__file__)))) + "/"
         self.tagger = None
         self.norm = Normalizer(downloading=True)
 
@@ -30,8 +35,6 @@ class MetaTagger:
         """
         if isinstance(item, str):   item = self.norm.normalize(item).split()
         return self.parse([item])[0]
-
-    ## ToDo get_resources.
 
     def parse(self, token_list: List[str]) -> List[List[Tuple[Any, Any]]]:
         """
