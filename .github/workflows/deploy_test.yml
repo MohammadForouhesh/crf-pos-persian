@@ -6,7 +6,11 @@ on:
       - main
   schedule:
     - cron: '0 0 * * *' # Once per day
-
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
 jobs:
   build:
 
