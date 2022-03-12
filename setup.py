@@ -47,13 +47,6 @@ def clean(path):
 def setup_package():
     root = Path(__file__).parent
 
-    if len(sys.argv) > 1 and sys.argv[1] == "clean":
-        return clean(root / "thinc")
-
-    with (root / "thinc" / "about.py").open("r") as f:
-        about = {}
-        exec(f.read(), about)
-
     setup(
         name='crf_pos',
         packages=PACKAGES,
