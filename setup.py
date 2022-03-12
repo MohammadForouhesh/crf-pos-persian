@@ -65,3 +65,7 @@ def setup_package():
         description='Persian Part-of-Speech tagger framework',
         package_data={"": ["*.pyx", "*.pxd", "*.pxi", "*.cu"]},
     )
+
+
+if __name__ == '__main__':
+    setup_package()
