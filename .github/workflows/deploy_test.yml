@@ -3,10 +3,9 @@ name: PyPI Unit test
 on:
   push:
     branches:
-      - integration-deployment-pipeline
-#
-#  schedule:
-#    - cron: '0 0 * * *' # Once per day
+      - main
+  schedule:
+    - cron: '0 0 * * *' # Once per day
 
 jobs:
   build:
