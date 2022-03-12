@@ -15,7 +15,9 @@ This repository contains Persian Part of Speech tagger based on Conditional Rand
 # Table of Contents
 1. [TO-DO](#todo)
 2. [Installation](#install)
-    1. [on CoLab](#colab)
+   1. [Using Pip](#pip)
+   2. [From Source](#source)
+   3. [Nn CoLab](#colab)
 3. [Usage](#usage)
 4. [Evaluation](#eval)
 
@@ -42,16 +44,22 @@ This repository contains Persian Part of Speech tagger based on Conditional Rand
 - [x] Scrutinize Coverage [issue#8](https://github.com/MohammadForouhesh/crf-pos-persian/issues/8#issue-1162353982)
 - [x] Documentation [pull#9](https://github.com/MohammadForouhesh/crf-pos-persian/pull/9#issuecomment-1061754671)
 - [x] Improve Coverage [pull#9](https://github.com/MohammadForouhesh/crf-pos-persian/pull/9#issuecomment-1061754671)  
-- [ ] Smooth Installation
+- [x] Smooth Installation [issue#12]() [pull#13]()
 - [x] Excel code quality [pull#11](https://github.com/MohammadForouhesh/crf-pos-persian/pull/11)
-
+- [ ] Adding documentation and flowchart of the code.
 ## Installation: <a name="install"></a>
+### Using Pip <a name="pip"></a>
+```shell
+! pip install crf_pos
+```
+
+### From Source <a name="source"></a>
 ```shell
 $ git clone https://github.com/MohammadForouhesh/crf-pos-persian 
 $ cd crf-pos-persian
 $ python setup.py install
 ```
-### on CoLab <a name="colab"></a>
+### On CoLab <a name="colab"></a>
 ```shell
 ! pip install git+https://github.com/MohammadForouhesh/crf-pos-persian.git
 ```
@@ -61,18 +69,19 @@ $ python setup.py install
 ```jupyterpython
 from crf_pos.pos_tagger.wapiti import WapitiPosTagger
 pos_tagger = WapitiPosTagger()
-tokens = text = 'او رئیس‌جمهور حجتالاسلاموالمسلمین ابرهیم رئیسی رئیس جمهور می باشد'.split()
+tokens = text = 'او رئیس‌جمهور حجتالاسلاموالمسلمین ابرهیم رئیسی رئیس جمهور ایران اسلامی می باشد'.split()
 pos_tagger[tokens]
 
 [1]: 
-[('ابراهیم', 'N'),
-('رپیسی', 'N'),
-('ریپس', 'ADJ'),
-('جمهور', 'N'),
-('جمهوری', 'N'),
-('اسلامی', 'ADJ'),
+[('او', 'PRO'),
+('رئیس\u200cجمهور', 'N'),
+('حجت\u200cالاسلام\u200cوالمسلمین', 'N'),
+('ابرهیم', 'N'),
+('رئیسی', 'N'),
+('رئیس\u200cجمهور', 'N'),
 ('ایران', 'N'),
-('میباشد', 'V')]
+('اسلامی', 'ADJ'),
+('می\u200cباشد', 'V')]
 ```
 ## Evaluation <a name="eval"></a>
 |Part-of-Speech|  precision|   recall|      f1-score|    support|

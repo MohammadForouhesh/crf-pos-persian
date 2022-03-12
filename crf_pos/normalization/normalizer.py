@@ -11,12 +11,11 @@ This Module contains the implementation and encapsulation for Text Normalizer, t
 helps with detecting
 half-spaces.
 """
-import itertools
-from re import sub
-import os
-from typing import Dict, List, Generator
 
-from crf_pos.api import downloader
+import os
+from re import sub
+from typing import Dict, List, Generator
+from crf_pos.api import get_resources
 from crf_pos.normalization.tokenizer import clean_text
 
 
@@ -24,23 +23,13 @@ class Normalizer:
     """
     A native persian text normalizer to help detecting half-spaces.
     """
-    def __init__(self, downloading: bool = False) -> None:
-        self.dir_path = os.path.dirname(
+    def __init__(self, downloading: bool = True) -> None:
+        dir_path = os.path.dirname(
             os.path.dirname(
                 os.path.dirname(
                     os.path.realpath(__file__)))) + "/"
-        if downloading: self.get_resources()
-        self.corrections = self.load_dictionary(self.dir_path + 'model/normalizer/corrections.txt')
-
-    def get_resources(self) -> None:
-        """
-        A tool to download required resources over internet.
-        :return:    None.
-        """
-        load_dir = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/corrections.txt'
-        save_dir = self.dir_path + '/model/normalizer/'
-        os.makedirs(save_dir, exist_ok=True)
-        downloader(path=load_dir, save_path=save_dir + 'corrections.txt', mode='wb')
+        if downloading: get_resources(dir_path, resource_name='corrections.txt')
+        self.corrections = self.load_dictionary(dir_path + 'resources/corrections.txt')
 
     @staticmethod
     def load_dictionary(file_path: str) -> Dict[str, str]:
@@ -76,12 +65,29 @@ class Normalizer:
 
     @staticmethod
     def window_sampling(tokens: List[str], window_length: int) -> Generator[str, None, None]:
+        """
+        Sample a sentence by moving a window of length `window_length` over it. e.g.
+        >>> list(Normalizer.window_sampling(tokens=['Hi', 'Hello', 'Hallo'], window_length=2))
+        ['Hi Hello', 'Hello Hallo']
+
+        :param tokens:          A list of tokens i.e. words
+        :param window_length:   An integer, the length of the sampling.
+        :return:                A list of concatenated tokens.
+        """
+
         if len(tokens) < window_length: yield ' '.join(tokens)
         while True:
             try:                yield ' '.join([tokens.pop(0)] + [tokens[_] for _ in range(window_length - 1)])
             except IndexError:  break
 
     def vector_mavericks(self, text: str, window_length: int) -> Generator[str, None, None]:
+        """
+        A generative recursive function that substitute a concatenated string of length `window_length` with its
+        half-space correction.
+        :param text:            The input text (str).
+        :param window_length:   The order (scope) of correction, considers the n-grams for correcting.
+        :return:                A list of tokens that are half-space corrected upto order `window_length`
+        """
         iter_sample = iter(self.window_sampling(text.replace('\u200c', ' ').split(), window_length))
         for word in iter_sample:
             try:
@@ -92,10 +98,21 @@ class Normalizer:
                 except: yield word.split()[0]
 
     def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str, None, None]:
+        """
+        Cascading the generation of half-space correction for a variety of different scopes (n-grams).
+        :param text:    An input text.
+        :param scope:   The maximum length of which we are interested to study.
+        :return:        A generator of generators
+        """
         yield self.vector_mavericks(text, scope)
         if scope > 1: yield from self.moving_mavericks(text, scope - 1)
 
     def collapse_mavericks(self, text: str) -> str:
+        """
+        Choosing the best output among all of the corrections.
+        :param text:    Input text (str)
+        :return:        half-space corrected text. (str)
+        """
         mavericks_cascades = list(map(lambda item: ' '.join(item), self.moving_mavericks(text)))
         return sorted(mavericks_cascades, key=lambda item: item.count('\u200c'))[-1]
 
