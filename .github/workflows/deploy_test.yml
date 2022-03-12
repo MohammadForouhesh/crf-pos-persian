@@ -29,12 +29,6 @@ jobs:
         pip install crf_pos[full]
     - name: Test
       run: |
-        mkdir crf_pos_test
-        cd crf_pos_test
-        pip download --no-binary=:all: --no-dependencies crf_pos
-        file="find . -name *.tar.gz"
-        file=$(eval "$file")
-        tar -xvzf $file --one-top-level
         pytest -v
         coverage run main.py
         coverage report -m
