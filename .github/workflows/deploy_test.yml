@@ -1,0 +1,47 @@
+name: PyPI Unit test
+
+on:
+  push:
+    branches:
+      - integration-deployment-pipeline
+#
+#  schedule:
+#    - cron: '0 0 * * *' # Once per day
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install deepcut
+        pip install crf_pos[full]
+    - name: Test
+      run: |
+        mkdir crf_pos_test
+        cd crf_pos_test
+        pip download --no-binary=:all: --no-dependencies crf_pos
+        file="find . -name *.tar.gz"
+        file=$(eval "$file")
+        tar -xvzf $file --one-top-level
+        second="/"
+        path=${file//.tar.gz/$second}
+        cd $path
+        ls
+        cd tests
+        mkdir tests
+        mv data tests/
+        pytest -v
+        coverage run main.py
+        coverage report -m
