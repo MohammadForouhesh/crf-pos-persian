@@ -67,7 +67,7 @@ class Normalizer:
     def window_sampling(tokens: List[str], window_length: int) -> Generator[str, None, None]:
         """
         Sample a sentence by moving a window of length `window_length` over it. e.g.
-        >>> Normalizer.window_sampling(tokens=['Hi', 'Hello', 'Hallo'], window_length=2)
+        >>> list(Normalizer.window_sampling(tokens=['Hi', 'Hello', 'Hallo'], window_length=2))
         ['Hi Hello', 'Hello Hallo']
 
         :param tokens:          A list of tokens i.e. words
