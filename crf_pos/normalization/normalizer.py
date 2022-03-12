@@ -65,12 +65,29 @@ class Normalizer:
 
     @staticmethod
     def window_sampling(tokens: List[str], window_length: int) -> Generator[str, None, None]:
+        """
+        Sample a sentence by moving a window of length `window_length` over it. e.g.
+        >>> window_length(tokens=['Hi', 'Hello', 'Hallo'], window_length=2)
+        ['Hi Hello', 'Hello Hallo']
+
+        :param tokens:          A list of tokens i.e. words
+        :param window_length:   An integer, the length of the sampling.
+        :return:                A list of concatenated tokens.
+        """
+
         if len(tokens) < window_length: yield ' '.join(tokens)
         while True:
             try:                yield ' '.join([tokens.pop(0)] + [tokens[_] for _ in range(window_length - 1)])
             except IndexError:  break
 
     def vector_mavericks(self, text: str, window_length: int) -> Generator[str, None, None]:
+        """
+        A generative recursive function that substitute a concatenated string of length `window_length` with its
+        half-space correction.
+        :param text:            The input text (str).
+        :param window_length:   The order (scope) of correction, considers the n-grams for correcting.
+        :return:                A list of tokens that are half-space corrected upto order `window_length`
+        """
         iter_sample = iter(self.window_sampling(text.replace('\u200c', ' ').split(), window_length))
         for word in iter_sample:
             try:
@@ -81,10 +98,21 @@ class Normalizer:
                 except: yield word.split()[0]
 
     def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str, None, None]:
+        """
+        Cascading the generation of half-space correction for a variety of different scopes (n-grams).
+        :param text:    An input text.
+        :param scope:   The maximum length of which we are interested to study.
+        :return:        A generator of generators
+        """
         yield self.vector_mavericks(text, scope)
         if scope > 1: yield from self.moving_mavericks(text, scope - 1)
 
     def collapse_mavericks(self, text: str) -> str:
+        """
+        Choosing the best output among all of the corrections.
+        :param text:    Input text (str)
+        :return:        half-space corrected text. (str)
+        """
         mavericks_cascades = list(map(lambda item: ' '.join(item), self.moving_mavericks(text)))
         return sorted(mavericks_cascades, key=lambda item: item.count('\u200c'))[-1]
 
