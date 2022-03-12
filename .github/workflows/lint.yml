@@ -3,7 +3,7 @@ name: Lint
 on:
   push:
     branches:
-      - integration-deployment-pipeline
+      - main
     paths-ignore:
       - '**.md'
   pull_request:
