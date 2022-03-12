@@ -11,15 +11,17 @@ This module contains tools to download resources over http connections.
 supported http links are:
     - https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/UPC_full_model_wapiti
     - https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/perpos.model
-    - https://raw.githubusercontent.com/MohammadForouhesh/Parsivar/master/parsivar/resource/normalizer/model/normalizer/Dic1_new.txt
-    - https://raw.githubusercontent.com/MohammadForouhesh/Parsivar/master/parsivar/resource/normalizer/model/normalizer/Dic2_new.txt
-    - https://raw.githubusercontent.com/MohammadForouhesh/Parsivar/master/parsivar/resource/normalizer/model/normalizer/Dic3_new.txt
+    - https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/corrections.txt
 """
 
 import os
 from typing import Union
 
 import requests
+
+http_dict = {'UPC_full_model_wapiti': 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/UPC_full_model_wapiti',
+             'perpos.model': 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/perpos.model',
+             'corrections.txt': 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/corrections.txt'}
 
 
 def downloader(path: str, save_path: str, mode: str) -> Union[int, None]:
@@ -44,3 +46,16 @@ def downloader(path: str, save_path: str, mode: str) -> Union[int, None]:
             resource.write(model_bin.content)
     except Exception:
         raise Exception('not a proper webpage')
+
+
+def get_resources(dir_path: str, resource_name: str) -> str:
+    """
+    A tool to download required resources over internet.
+    :param dir_path:        Path to the https link of the resource
+    :param resource_name:   Resource name.
+    :return:                Path to the downloaded resource.
+    """
+    save_dir = dir_path + '/resources/'
+    os.makedirs(save_dir, exist_ok=True)
+    downloader(path=http_dict[resource_name], save_path=save_dir + resource_name, mode='wb')
+    return str(save_dir + resource_name)
