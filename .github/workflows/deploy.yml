@@ -1,8 +1,11 @@
 name: Publish to PyPI
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - integration-deployment-pipeline
+#  release:
+#    types: [published]
 jobs:
   build-and-publish-to-pypi:
     name: Build and publish to PyPI
