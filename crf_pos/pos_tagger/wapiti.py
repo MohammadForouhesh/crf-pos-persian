@@ -12,6 +12,8 @@ This module contains the implementation and encapsulation for Wapiti classifier.
 
 from typing import List, Any, Tuple
 from wapiti import Model
+
+from crf_pos.api import get_resources
 from crf_pos.pos_tagger.meta_tagger import MetaTagger
 from crf_pos.pos_tagger.utils import remove_after_underline
 
@@ -20,8 +22,9 @@ class WapitiPosTagger(MetaTagger):
     """
     Wapiti Part-of-Speech tagger encapsulation.
     """
-    def __init__(self, model_path: str = 'model/UPC_full_model_wapiti') -> None:
+    def __init__(self) -> None:
         super().__init__()
+        model_path = get_resources(self.dir_path, resource_name='UPC_full_model_wapiti')
         self.tagger = Model(model=model_path)
 
     def parse(self, token_list: List[str]) -> List[List[Tuple[Any, Any]]]:
