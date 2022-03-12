@@ -35,13 +35,6 @@ jobs:
         file="find . -name *.tar.gz"
         file=$(eval "$file")
         tar -xvzf $file --one-top-level
-        second="/"
-        path=${file//.tar.gz/$second}
-        cd $path
-        ls
-        cd tests
-        mkdir tests
-        mv data tests/
         pytest -v
         coverage run main.py
         coverage report -m
