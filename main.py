@@ -11,7 +11,6 @@ This module serves as unit testing for various functionalities in the code.
 """
 
 import unittest
-import os
 from crf_pos.pos_tagger.crf import CrfPosTagger
 from crf_pos.api import downloader
 from crf_pos.pos_tagger.wapiti import WapitiPosTagger
@@ -36,11 +35,7 @@ class NormalizerTestCase(unittest.TestCase):
 
 class CrfTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        load_dir = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/perpos.model'
-        save_dir = os.path.dirname(os.path.realpath(__file__)) + '/model/'
-        os.makedirs(save_dir, exist_ok=True)
-        downloader(path=load_dir, save_path=save_dir + 'perpos-v1.model', mode='wb')
-        self.tagger = CrfPosTagger(save_dir + 'perpos-v1.model')
+        self.tagger = CrfPosTagger()
         self.all_tags = ('N', 'P', 'V', 'ADV', 'ADVe', 'RES', 'RESe', 'DET', 'DETe', 'AJ', 'AJe',
                          'CL', 'INT', 'CONJ', 'CONJe', 'POSTP', 'PRO', 'PROe', 'NUM', 'NUMe',
                          'PUNC', 'Ne', 'Pe')
@@ -58,7 +53,6 @@ class CrfTestCase(unittest.TestCase):
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'][0], tuple)
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'][0][1], str)
         for item in self.tagger['ابراهیم رئیسی رئيس جمهور جمهوری اسلامی ایران میباشد']:
-            print(item)
             self.assertIn(member=item[1], container=self.all_tags)
 
     def test_crf_ai(self) -> None:
@@ -67,11 +61,7 @@ class CrfTestCase(unittest.TestCase):
 
 class WapitiTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        load_dir = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/UPC_full_model_wapiti'
-        save_dir = os.path.dirname(os.path.realpath(__file__)) + "/model/"
-        os.makedirs(save_dir, exist_ok=True)
-        downloader(path=load_dir, save_path=save_dir + 'UPC_full_model_wapiti', mode='wb')
-        self.tagger = WapitiPosTagger(model_path=save_dir + 'UPC_full_model_wapiti')
+        self.tagger = WapitiPosTagger()
         self.all_tags = ('N', 'P', 'V', 'ADV', 'ADJ', 'PRO', 'CON')
 
     def test_wapiti_normalizer(self) -> None:
@@ -84,7 +74,6 @@ class WapitiTestCase(unittest.TestCase):
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'][0], tuple)
         self.assertIsInstance(self.tagger['رئيس‌جمهور جمهوری اسلامی'][0][1], str)
         for item in self.tagger['او وقتی رئيس جمهور جمهوری اسلامی ایران میباشد مملکت معمولا ویران است']:
-            print(item)
             self.assertIn(member=item[1], container=self.all_tags)
 
     def test_wapiti_ai(self) -> None:
