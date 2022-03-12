@@ -61,18 +61,19 @@ $ python setup.py install
 ```jupyterpython
 from crf_pos.pos_tagger.wapiti import WapitiPosTagger
 pos_tagger = WapitiPosTagger()
-tokens = text = 'او رئیس‌جمهور حجتالاسلاموالمسلمین ابرهیم رئیسی رئیس جمهور می باشد'.split()
+tokens = text = 'او رئیس‌جمهور حجتالاسلاموالمسلمین ابرهیم رئیسی رئیس جمهور ایران اسلامی می باشد'.split()
 pos_tagger[tokens]
 
 [1]: 
-[('ابراهیم', 'N'),
-('رپیسی', 'N'),
-('ریپس', 'ADJ'),
-('جمهور', 'N'),
-('جمهوری', 'N'),
-('اسلامی', 'ADJ'),
+[('او', 'PRO'),
+('رئیس\u200cجمهور', 'N'),
+('حجت\u200cالاسلام\u200cوالمسلمین', 'N'),
+('ابرهیم', 'N'),
+('رئیسی', 'N'),
+('رئیس\u200cجمهور', 'N'),
 ('ایران', 'N'),
-('میباشد', 'V')]
+('اسلامی', 'ADJ'),
+('می\u200cباشد', 'V')]
 ```
 ## Evaluation <a name="eval"></a>
 |Part-of-Speech|  precision|   recall|      f1-score|    support|
