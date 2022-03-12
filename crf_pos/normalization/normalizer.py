@@ -11,12 +11,11 @@ This Module contains the implementation and encapsulation for Text Normalizer, t
 helps with detecting
 half-spaces.
 """
-import itertools
-from re import sub
-import os
-from typing import Dict, List, Generator
 
-from crf_pos.api import downloader
+import os
+from re import sub
+from typing import Dict, List, Generator
+from crf_pos.api import get_resources
 from crf_pos.normalization.tokenizer import clean_text
 
 
@@ -24,23 +23,13 @@ class Normalizer:
     """
     A native persian text normalizer to help detecting half-spaces.
     """
-    def __init__(self, downloading: bool = False) -> None:
-        self.dir_path = os.path.dirname(
+    def __init__(self, downloading: bool = True) -> None:
+        dir_path = os.path.dirname(
             os.path.dirname(
                 os.path.dirname(
                     os.path.realpath(__file__)))) + "/"
-        if downloading: self.get_resources()
-        self.corrections = self.load_dictionary(self.dir_path + 'model/normalizer/corrections.txt')
-
-    def get_resources(self) -> None:
-        """
-        A tool to download required resources over internet.
-        :return:    None.
-        """
-        load_dir = 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/corrections.txt'
-        save_dir = self.dir_path + '/model/normalizer/'
-        os.makedirs(save_dir, exist_ok=True)
-        downloader(path=load_dir, save_path=save_dir + 'corrections.txt', mode='wb')
+        if downloading: get_resources(dir_path, resource_name='corrections.txt')
+        self.corrections = self.load_dictionary(dir_path + 'resources/corrections.txt')
 
     @staticmethod
     def load_dictionary(file_path: str) -> Dict[str, str]:
