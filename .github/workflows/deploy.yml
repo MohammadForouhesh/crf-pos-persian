@@ -27,7 +27,7 @@ jobs:
           --wheel
           --outdir dist/
           .
-      - name: Publish to TestPyPI
+      - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           username: test_api_token
