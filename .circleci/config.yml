@@ -86,9 +86,9 @@ workflows:
             - lint
             - test
       - test_pypi:
-          filters:
-            branches:
-              only:                
-                - main
+          # filters:
+          #   branches:
+          #     only:                
+          #       - main
           requires:
             - coverage
