@@ -87,6 +87,8 @@ pos_tagger[tokens]
 ('می\u200cباشد', 'V')]
 ```
 ## Evaluation <a name="eval"></a>
+Test and training is perfomed on Mojgan Seraji's [Uppsala Persian Corpus](https://sites.google.com/site/mojganserajicom/home/upc)
+
 |Part-of-Speech|  precision|   recall|      f1-score|    support|
 |--------------|-----------|---------|--------------|-----------|
 |          N   |     0.985 |   0.970 |       0.977  |    186585 | 
