@@ -16,7 +16,6 @@ jobs:
     docker:
       - image: cimg/python:3.7.12
     steps:
-      - checkout
       - run:
           name: Run tests
           command: |
@@ -25,7 +24,6 @@ jobs:
     docker:
       - image: cimg/python:3.7.12
     steps:
-      - checkout
       - run:
           name: Run coverage
           command: |
