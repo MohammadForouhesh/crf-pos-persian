@@ -14,13 +14,15 @@ jobs:
     steps:
       - checkout
       - run: mkdir -p workspace
-      - persist_to_workspace:
-          root: workspace
-          paths:
-            - .*
+      - run: cd workspace
+      - run: ls -a
       - python/install-packages:
           pkg-manager: pip
       - run: ls -a
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - .workspace/*
           
   test:
     executor: installation
