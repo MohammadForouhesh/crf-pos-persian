@@ -39,7 +39,7 @@ jobs:
           command: |
             coverage run main.py
             coverage report -m
-    parallelism: 3
+    parallelism: 1
 
   lint:
     docker:
@@ -58,6 +58,19 @@ jobs:
             flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
             flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
+  test_pypi:
+    executor: initialization
+    steps:
+      - checkout
+      - run:
+          name: Install from PyPI
+          command: |
+            pip install crf_suite[full]
+      - run:
+          name: Test PyPI Release
+          command: |
+            pytest -v
+
 workflows:
   build_test_coverage:
     jobs:
@@ -72,4 +85,10 @@ workflows:
           requires:
             - lint
             - test
-            
+      - test_pypi:
+          filters:
+            branches:
+              only:                
+                - main
+          requires:
+            - coverage
