@@ -49,14 +49,13 @@ jobs:
 workflows:
   build_test_coverage:
     jobs:
+      - lint
       - build
       - test:
           requires:
             - build
-          context: org-global
       - coverage:
           requires:
             - build
             - test
-          context: org-global
             
