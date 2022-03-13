@@ -19,6 +19,7 @@ jobs:
       - run:
           name: Run tests
           command: |
+            pip install pytest
             pytest -v      
   coverage:
     docker:
