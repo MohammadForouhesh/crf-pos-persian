@@ -65,7 +65,7 @@ jobs:
       - run:
           name: Install from PyPI
           command: |
-            pip install crf_suite[full]
+            pip install crf_pos[full]
       - run:
           name: Test PyPI Release
           command: |
