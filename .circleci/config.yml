@@ -17,7 +17,7 @@ jobs:
       - persist_to_workspace:
           root: workspace
           paths:
-            - /*
+            - .*
       - python/install-packages:
           pkg-manager: pip
       - run: ls -a
