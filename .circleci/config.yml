@@ -26,6 +26,7 @@ jobs:
           name: Run tests
           command: |
             pytest -v
+    parallelism: 3
 
   coverage:
     executor: initialization
@@ -38,7 +39,8 @@ jobs:
           command: |
             coverage run main.py
             coverage report -m
-          
+    parallelism: 3
+
   lint:
     docker:
       - image: cimg/python:3.7.12
@@ -59,13 +61,15 @@ jobs:
 workflows:
   build_test_coverage:
     jobs:
-      - lint
       - build
+      - lint:
+          requires:
+            - build
       - test:
           requires:
             - build
       - coverage:
           requires:
-            - build
+            - lint
             - test
             
