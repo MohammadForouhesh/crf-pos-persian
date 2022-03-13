@@ -3,44 +3,92 @@ version: 2.1
 orbs:
   python: circleci/python@1.5.0
 
-
+executors:
+  initialization:
+    docker:
+      - image: cimg/python:3.7.12
+          
 jobs:
   build:
+    executor: initialization
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+
+  test:
+    executor: initialization
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+      - run:
+          name: Run tests
+          command: |
+            pytest -v
+    parallelism: 3
+
+  coverage:
+    executor: initialization
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: pip
+      - run:
+          name: Run coverage
+          command: |
+            coverage run main.py
+            coverage report -m
+    parallelism: 1
+
+  lint:
     docker:
       - image: cimg/python:3.7.12
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-  test:
-    docker:
-      - image: cimg/python:3.7.12
+      - run:
+          name: Install Dependancies 
+          command: |
+            pip install flake8 flake8-commas flake8-comprehensions flake8-tidy-imports
+      - run:
+          name: Lint with flake8
+          command: |
+            flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+            flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+  test_pypi:
+    executor: initialization
     steps:
       - checkout
       - run:
-          name: Run tests
+          name: Install from PyPI
           command: |
-            pytest -v      
-  coverage:
-    docker:
-      - image: cimg/python:3.7.12
-    steps:
-      - checkout
+            pip install crf_pos[full]
       - run:
-          name: Run coverage
+          name: Test PyPI Release
           command: |
-            coverage run main.py
-            coverage report -m
+            pytest -v
 
 workflows:
-  build_test_coverage_deploy:
+  build_test_coverage:
     jobs:
       - build
+      - lint:
+          requires:
+            - build
       - test:
           requires:
             - build
       - coverage:
           requires:
-            - build
+            - lint
             - test
-            
+      - test_pypi:
+          # filters:
+          #   branches:
+          #     only:                
+          #       - main
+          requires:
+            - coverage
