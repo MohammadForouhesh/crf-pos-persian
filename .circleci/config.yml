@@ -1,5 +1,7 @@
 version: 2.1
 
+setup: true
+
 orbs:
   python: circleci/python@1.5.0
 
