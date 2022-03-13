@@ -26,26 +26,24 @@ jobs:
     executor: installation
     steps:
       - checkout
+      - attach_workspace:
+          at: /tmp/workspace
       - run:
           name: Run tests
           command: |
             pytest -v
-      - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: /tmp/workspace
 
   coverage:
     executor: installation
     steps:
       - checkout
+      - attach_workspace:
+          at: /tmp/workspace
       - run:
           name: Run coverage
           command: |
             coverage run main.py
             coverage report -m
-      - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: /tmp/workspace
           
   lint:
     docker:
