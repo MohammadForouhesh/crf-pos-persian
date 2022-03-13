@@ -2,45 +2,37 @@ version: 2.1
 
 orbs:
   python: circleci/python@1.5.0
+
 executors:
-  installation:
+  initialization:
     docker:
       - image: cimg/python:3.7.12
-    working_directory: /tmp
           
 jobs:
   build:
-    executor: installation
+    executor: initialization
     steps:
       - checkout
-      - run: mkdir -p workspace
-      - run: cd workspace
-      - run: ls -a
       - python/install-packages:
           pkg-manager: pip
-      - run: ls -a
-      - persist_to_workspace:
-          root: workspace
-          paths:
-            - .workspace/*
-          
+
   test:
-    executor: installation
+    executor: initialization
     steps:
       - checkout
-      - attach_workspace:
-          at: /tmp/workspace
+      - python/install-packages:
+          pkg-manager: pip
       - run:
           name: Run tests
           command: |
             pytest -v
 
   coverage:
-    executor: installation
+    executor: initialization
     steps:
       - checkout
-      - attach_workspace:
-          at: /tmp/workspace
+      - python/install-packages:
+          pkg-manager: pip
       - run:
           name: Run coverage
           command: |
@@ -52,20 +44,17 @@ jobs:
       - image: cimg/python:3.7.12
     steps:
       - checkout
+      - python/install-packages:
+          pkg-manager: pip
       - run:
           name: Install Dependancies 
           command: |
-            python -m pip install --upgrade pip
-            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
             pip install flake8 flake8-commas flake8-comprehensions flake8-tidy-imports
       - run:
           name: Lint with flake8
           command: |
             flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
             flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - store_artifacts:
-          path: /tmp/artifacts
-          destination: build
 
 workflows:
   build_test_coverage:
