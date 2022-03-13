@@ -10,6 +10,9 @@
 
 [ask]: https://img.shields.io/badge/Ask%20me-anything-1.svg
 
+[![Downloads](https://pepy.tech/badge/crf-pos)](https://pepy.tech/project/crf-pos)
+[![Downloads_per_month](https://pepy.tech/badge/crf-pos/month)](https://pepy.tech/project/crf-pos)
+
 This repository contains Persian Part of Speech tagger based on Conditional Random Fields and a native Text Normalizer.
 
 # Table of Contents
