@@ -50,6 +50,8 @@ This repository contains Persian Part of Speech tagger based on Conditional Rand
 - [x] Smooth Installation [issue#12](https://github.com/MohammadForouhesh/crf-pos-persian/issues/12) [pull#13](https://github.com/MohammadForouhesh/crf-pos-persian/pull/13)
 - [x] Excel code quality [pull#11](https://github.com/MohammadForouhesh/crf-pos-persian/pull/11)
 - [ ] Adding documentation and flowchart of the code.
+- [x] CircleCI CI/CD Pipeline Config [issue#14](https://github.com/MohammadForouhesh/crf-pos-persian/issues/14)
+
 ## Installation: <a name="install"></a>
 ### Using Pip <a name="pip"></a>
 ```shell
