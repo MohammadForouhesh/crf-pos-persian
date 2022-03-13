@@ -19,7 +19,6 @@ jobs:
       - run:
           name: Run tests
           command: |
-            pip install pytest
             pytest -v      
   coverage:
     docker:
@@ -50,8 +49,7 @@ jobs:
 workflows:
   build_test_coverage:
     jobs:
-      - build:
-          context: org-global
+      - build
       - test:
           requires:
             - build
