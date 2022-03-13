@@ -50,12 +50,15 @@ jobs:
 workflows:
   build_test_coverage:
     jobs:
-      - build
+      - build:
+          context: org-global
       - test:
           requires:
             - build
+          context: org-global
       - coverage:
           requires:
             - build
             - test
+          context: org-global
             
