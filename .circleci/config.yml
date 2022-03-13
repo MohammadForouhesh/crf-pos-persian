@@ -1,36 +1,52 @@
 version: 2.1
 
-setup: true
-
 orbs:
   python: circleci/python@1.5.0
-
-
+executors:
+  installation:
+    docker:
+      - image: cimg/python:3.7.12
+    working_directory: /tmp
+          
 jobs:
   build:
-    docker:
-      - image: cimg/python:3.7.12
+    executor: installation
     steps:
       - checkout
+      - run: mkdir -p workspace
+      - persist_to_workspace:
+          root: workspace
+          paths:
+            - /*
       - python/install-packages:
           pkg-manager: pip
+      - run: ls -a
+          
   test:
-    docker:
-      - image: cimg/python:3.7.12
+    executor: installation
     steps:
+      - checkout
       - run:
           name: Run tests
           command: |
-            pytest -v      
+            pytest -v
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /tmp/workspace
+
   coverage:
-    docker:
-      - image: cimg/python:3.7.12
+    executor: installation
     steps:
+      - checkout
       - run:
           name: Run coverage
           command: |
             coverage run main.py
             coverage report -m
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /tmp/workspace
+          
   lint:
     docker:
       - image: cimg/python:3.7.12
