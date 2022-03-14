@@ -50,7 +50,7 @@ def setup_package():
     setup(
         name='crf_pos',
         packages=PACKAGES,
-        version='2.0.1',
+        version='2.1.1',
         url='https://github.com/MohammadForouhesh/crf-pos-persian',
         license='MIT',
         author='MohammadForouhesh',
