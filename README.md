@@ -24,6 +24,7 @@ This repository contains Persian Part of Speech tagger based on Conditional Rand
 3. [Usage](#usage)
 4. [Implementation Details](#implementation-details)
 5. [Evaluation](#eval)
+6. [How To Contribute](#contrib)
 
 [comment]: <> (5. [I/O]&#40;#tpa_io&#41;)
 
@@ -124,4 +125,7 @@ Test and training is perfomed on Mojgan Seraji's [Uppsala Persian Corpus](https:
 ||
 |   <b> avg/total </b> |     0.985 |   0.985 |       0.985  |    885797 |
     
- 
+## How To Contribute <a name="contrib"></a>
+
+   1.   Report any encountered error trough [[BUG]](https://github.com/MohammadForouhesh/crf-pos-persian/issues/new?assignees=MohammadForouhesh&labels=bug&template=bug_report.md&title=%5Bbug%5D)
+   2.   Report if Normalizer mis-out half-space correction trough [[ZWNJ]](https://github.com/MohammadForouhesh/crf-pos-persian/issues/new?assignees=MohammadForouhesh&labels=enhancement&template=half-space-request.md&title=%5BZWNJ%5D) 
