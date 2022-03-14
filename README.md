@@ -22,7 +22,8 @@ This repository contains Persian Part of Speech tagger based on Conditional Rand
    2. [From Source](#source)
    3. [Nn CoLab](#colab)
 3. [Usage](#usage)
-4. [Evaluation](#eval)
+4. [Implementation Details](#implementation-details)
+5. [Evaluation](#eval)
 
 [comment]: <> (5. [I/O]&#40;#tpa_io&#41;)
 
@@ -49,7 +50,7 @@ This repository contains Persian Part of Speech tagger based on Conditional Rand
 - [x] Improve Coverage [pull#9](https://github.com/MohammadForouhesh/crf-pos-persian/pull/9#issuecomment-1061754671)  
 - [x] Smooth Installation [issue#12](https://github.com/MohammadForouhesh/crf-pos-persian/issues/12) [pull#13](https://github.com/MohammadForouhesh/crf-pos-persian/pull/13)
 - [x] Excel code quality [pull#11](https://github.com/MohammadForouhesh/crf-pos-persian/pull/11)
-- [ ] Adding documentation and flowchart of the code.
+- [x] Adding documentation and flowchart of the code.
 - [x] CircleCI CI/CD Pipeline Config [issue#14](https://github.com/MohammadForouhesh/crf-pos-persian/issues/14)
 
 ## Installation: <a name="install"></a>
@@ -88,6 +89,10 @@ pos_tagger[tokens]
 ('اسلامی', 'ADJ'),
 ('می\u200cباشد', 'V')]
 ```
+
+## Implementation Details <a name="implementation-details"></a>
+[![](https://mermaid.ink/svg/pako:eNptkkFvgjAUx79K0xMkQgQ8kehh4i7ObVGTRccOFSo2g5aVdnFTv_sKlA0YPfW99-u_7_3bC4xYjKEPE47yE9gGIQVq3RlH5B-RFaUkPzDEYyDwWZjAsmZg7150kSUFeGQ8Qyn5xvxWHy3kodZCdVyumHAcCcIoeFj_ZVeTSu-KokhmMkUCX8HKa9W9gbrbqrsDdadVd4Bl24qYG0Z0wtG7qQYo4w7kllBFOX3M7fZia87tc153JrsBvT44CWmNYhrXm5Vj_JoJJCWW8i7TPqvjGTqbpibdFnnogprwWoTgXQRoZtJmsOBoQGjvgumUVe1WoafCGdi1n32LkuT_kzvNfLtSL2iuKj2wig-JOAbz9b3ZYhZDzAvKiSBmI7aomluODeOTCdz4Eehsz9DluM6_1rpa8flpYwmUvIUUjmCG1Zclsfr0l_JMCMUJZziEvtpSLJUnaQhDelOozGP1rRYxEYxDpZcWeASRFGzzRSPoCy5xAwUElU5q6vYDbdLy1Q)](https://mermaid.ink/svg/pako:eNptkkFvgjAUx79K0xMkQgQ8kehh4i7ObVGTRccOFSo2g5aVdnFTv_sKlA0YPfW99-u_7_3bC4xYjKEPE47yE9gGIQVq3RlH5B-RFaUkPzDEYyDwWZjAsmZg7150kSUFeGQ8Qyn5xvxWHy3kodZCdVyumHAcCcIoeFj_ZVeTSu-KokhmMkUCX8HKa9W9gbrbqrsDdadVd4Bl24qYG0Z0wtG7qQYo4w7kllBFOX3M7fZia87tc153JrsBvT44CWmNYhrXm5Vj_JoJJCWW8i7TPqvjGTqbpibdFnnogprwWoTgXQRoZtJmsOBoQGjvgumUVe1WoafCGdi1n32LkuT_kzvNfLtSL2iuKj2wig-JOAbz9b3ZYhZDzAvKiSBmI7aomluODeOTCdz4Eehsz9DluM6_1rpa8flpYwmUvIUUjmCG1Zclsfr0l_JMCMUJZziEvtpSLJUnaQhDelOozGP1rRYxEYxDpZcWeASRFGzzRSPoCy5xAwUElU5q6vYDbdLy1Q)
+
 ## Evaluation <a name="eval"></a>
 Test and training is perfomed on Mojgan Seraji's [Uppsala Persian Corpus](https://sites.google.com/site/mojganserajicom/home/upc)
 
