@@ -76,7 +76,7 @@ $ python setup.py install
 ```jupyterpython
 from crf_pos.pos_tagger.wapiti import WapitiPosTagger
 pos_tagger = WapitiPosTagger()
-tokens = text = 'او رئیس‌جمهور حجتالاسلاموالمسلمین ابرهیم رئیسی رئیس جمهور ایران اسلامی می باشد'.split()
+tokens = 'او رئیس‌جمهور حجتالاسلاموالمسلمین ابرهیم رئیسی رئیس جمهور ایران اسلامی می باشد'.split()
 pos_tagger[tokens]
 
 [1]: 
