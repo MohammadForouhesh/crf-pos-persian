@@ -34,6 +34,7 @@ class MetaTagger:
         :return:        A List of tuples including a word and its part of speech.
         """
         if isinstance(item, str):   item = self.norm.normalize(item).split()
+        else:                       item = self.norm.normalize(' '.join(item)).split()
         return self.parse([item])[0]
 
     def parse(self, token_list: List[str]) -> List[List[Tuple[Any, Any]]]:
