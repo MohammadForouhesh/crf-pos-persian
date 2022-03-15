@@ -57,6 +57,10 @@ class CrfTestCase(unittest.TestCase):
 
     def test_crf_ai(self) -> None:
         self.assertIn(self.tagger['رئيس‌جمهور'][0][1], 'Ne')
+       
+    def test_crf_soundness(self) -> None:
+        text = 'ابراهیم رئیسی رئيس جمهور جمهوری اسلامی ایران میباشد'
+        self.assertEqual(self.tagger[text], self.tagger[text.split()])
 
 
 class WapitiTestCase(unittest.TestCase):
@@ -78,6 +82,10 @@ class WapitiTestCase(unittest.TestCase):
 
     def test_wapiti_ai(self) -> None:
         self.assertIn(self.tagger['رئيس‌جمهور'][0][1], 'Ne')
+       
+    def test_wapiti_soundness(self) -> None:
+        text = 'ابراهیم رئیسی رئيس جمهور جمهوری اسلامی ایران میباشد'
+        self.assertEqual(self.tagger[text], self.tagger[text.split()])
 
 
 if __name__ == '__main__':
