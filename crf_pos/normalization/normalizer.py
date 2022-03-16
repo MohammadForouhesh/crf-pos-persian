@@ -131,6 +131,8 @@ class Normalizer:
         return updated_text
 
     def update_corrections(self, text):
-        with open(self.dir_path + 'resources/corrections.txt', 'a') as corrections:
+        with open(self.dir_path + 'resources/corrections.txt', 'r+') as corrections:
+            old_file = corrections.read()
             for word in set(text.split(' ')):
-                if '\u200c' in word:    corrections.write('\n' + word.replace('\u200c', '') + ' ' + word)
+                if '\u200c' in word and word not in old_file:
+                    corrections.write('\n' + word.replace('\u200c', '') + ' ' + word)
