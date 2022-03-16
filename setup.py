@@ -40,7 +40,7 @@ if is_new_osx():
 def clean(path):
     for path in path.glob("**/*"):
         if path.is_file() and path.suffix in (".so", ".cpp"):
-            print(f"Deleting {path.name}")
+            print(f'Deleting {path.name}')
             path.unlink()
 
 
@@ -50,7 +50,7 @@ def setup_package():
     setup(
         name='crf_pos',
         packages=PACKAGES,
-        version='2.1.1',
+        version='2.1.2',
         url='https://github.com/MohammadForouhesh/crf-pos-persian',
         license='MIT',
         author='MohammadForouhesh',
