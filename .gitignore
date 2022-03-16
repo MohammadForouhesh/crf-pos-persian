@@ -7,3 +7,7 @@
 model/UPC_full_model_wapiti
 *.txt
 resources/UPC_full_model_wapiti
+
+build/*
+dist/*
+*.egg-info/*
