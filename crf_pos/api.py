@@ -11,7 +11,7 @@ This module contains tools to download resources over http connections.
 supported http links are:
     - https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/UPC_full_model_wapiti
     - https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/perpos.model
-    - https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/corrections.txt
+    - https://raw.githubusercontent.com/MohammadForouhesh/crf-pos-persian/main/resources/corrections.txt
 """
 
 import os
@@ -21,7 +21,7 @@ import requests
 
 http_dict = {'UPC_full_model_wapiti': 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/UPC_full_model_wapiti',
              'perpos.model': 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/perpos.model',
-             'corrections.txt': 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/corrections.txt'}
+             'corrections.txt': 'https://raw.githubusercontent.com/MohammadForouhesh/crf-pos-persian/main/resources/corrections.txt'}
 
 
 def downloader(path: str, save_path: str, mode: str) -> Union[int, None]:
@@ -30,9 +30,7 @@ def downloader(path: str, save_path: str, mode: str) -> Union[int, None]:
     supported http links are:
     - https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/UPC_full_model_wapiti
     - https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/perpos.model
-    - https://raw.githubusercontent.com/MohammadForouhesh/Parsivar/master/parsivar/resource/normalizer/model/normalizer/Dic1_new.txt
-    - https://raw.githubusercontent.com/MohammadForouhesh/Parsivar/master/parsivar/resource/normalizer/model/normalizer/Dic2_new.txt
-    - https://raw.githubusercontent.com/MohammadForouhesh/Parsivar/master/parsivar/resource/normalizer/model/normalizer/Dic3_new.txt
+    - https://raw.githubusercontent.com/MohammadForouhesh/crf-pos-persian/main/resources/corrections.txt
 
     :param path:        The path to the desired file.
     :param save_path:   The intended storage path.
