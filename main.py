@@ -70,6 +70,8 @@ class WapitiTestCase(unittest.TestCase):
 
     def test_wapiti_normalizer(self) -> None:
         self.assertEqual(self.tagger['می باشد'], self.tagger['می‌باشد'])
+        self.assertEqual(self.tagger['می گویم'], self.tagger['می‌گویم'])
+        self.assertEqual(self.tagger['می باشد'], self.tagger['می‌باشد'])
         self.assertEqual(self.tagger['نهاد ریاست جمهوری'], self.tagger['نهاد ریاست‌جمهوری'])
 
     def test_wapiti_tagger(self) -> None:

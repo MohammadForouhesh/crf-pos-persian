@@ -24,12 +24,12 @@ class Normalizer:
     A native persian text normalizer to help detecting half-spaces.
     """
     def __init__(self, downloading: bool = True) -> None:
-        dir_path = os.path.dirname(
+        self.dir_path = os.path.dirname(
             os.path.dirname(
                 os.path.dirname(
                     os.path.realpath(__file__)))) + "/"
-        if downloading: get_resources(dir_path, resource_name='corrections.txt')
-        self.corrections = self.load_dictionary(dir_path + 'resources/corrections.txt')
+        if downloading: get_resources(self.dir_path, resource_name='corrections.txt')
+        self.corrections = self.load_dictionary(self.dir_path + 'resources/corrections.txt')
 
     @staticmethod
     def load_dictionary(file_path: str) -> Dict[str, str]:
@@ -56,7 +56,7 @@ class Normalizer:
         text = sub(r'^(بی|می|نمی)( )', r'\1‌', text)
         text = sub(r'( )(می|نمی|بی)( )', r'\1\2‌', text)
         pattern = r'( )(هایی|ها|های|ایی|هایم|هایت|هایش|هایمان|هایتان|هایشان|ات|ان|ین' \
-                  r'|انی|بان|ام|ای|یم|ید|اید|اند|بودم|بودی|بود|بودیم|بودید|بودند|ست)( )' \
+                  r'|انی|بان|ام|ای|یم|ید|اید|اند|بودم|بودی|بود|بودیم|بودید|بودند|ستگفتم|گفتی|گفت|گفتیم|گفتید|گفتند)( )'\
                   r'( )(طلبان|طلب|گرایی|گرایان|شناس|شناسی|گذاری|گذار|گذاران|شناسان|گیری|پذیری|بندی|آوری|سازی|' \
                   r'بندی|کننده|کنندگان|گیری|پرداز|پردازی|پردازان|آمیز|سنجی|ریزی|داری|دهنده|آمیز|پذیری' \
                   r'|پذیر|پذیران|گر|ریز|ریزی|رسانی|یاب|یابی|گانه|گانه‌ای|انگاری|گا|بند|رسانی|دهندگان|دار)( )'
@@ -93,9 +93,10 @@ class Normalizer:
             try:
                 yield self.corrections[word.replace(' ', '')]
                 for ind in range(0, window_length - 1):   next(iter_sample, None)
-            except:
-                try:    yield self.corrections[word.split()[0]]
-                except: yield word.split()[0]
+            except KeyError:
+                try:                yield self.corrections[word.split()[0]]
+                except KeyError:    yield word.split()[0]
+            except IndexError:      yield ''
 
     def moving_mavericks(self, text: str, scope: int = 4) -> Generator[str, None, None]:
         """
@@ -125,4 +126,13 @@ class Normalizer:
         :return:            A normalized text.
         """
         cleansed_string = clean_text(text, new_line_elimination).strip()
-        return self.space_correction(self.collapse_mavericks(cleansed_string)).strip()
+        updated_text = self.space_correction(self.collapse_mavericks(cleansed_string)).strip()
+        self.update_corrections(updated_text)
+        return updated_text
+
+    def update_corrections(self, text):
+        with open(self.dir_path + 'resources/corrections.txt', 'r+') as corrections:
+            old_file = corrections.read()
+            for word in set(text.split(' ')):
+                if '\u200c' in word and word not in old_file:
+                    corrections.write('\n' + word.replace('\u200c', '') + ' ' + word)
