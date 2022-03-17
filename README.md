@@ -97,8 +97,8 @@ pos_tagger[tokens]
 ## Evaluation <a name="eval"></a>
 Test and training is perfomed on Mojgan Seraji's [Uppsala Persian Corpus](https://sites.google.com/site/mojganserajicom/home/upc)
 
-|Part-of-Speech|  precision|   recall|   f1-score|    support|
-|--------------|-----------|---------|-----------|-----------|
+|Part-of-Speech| Description | precision|   recall|   f1-score|    support|
+|--------------|-----------|---------|-----------|-----------|---------|
 |          N   |    Noun   |   0.985 |     0.970 |    0.977  |    186585 | 
 |          P   |Preposition|   0.998 |     0.998 |     0.998 |     89450 |
 |          V   |    Verb   |   0.999 |     0.999 |    0.999  |     87762 | 
@@ -111,7 +111,7 @@ Test and training is perfomed on Mojgan Seraji's [Uppsala Persian Corpus](https:
 |        PRO   |   Pronoun |   0.973 |     0.974 |    0.973  |     23094 |
 |        NUM   |   Numeral |   0.988 |     0.992 |     0.990 |     24864 |
 ||
-|   <b> avg/total </b> |     0.985 |   0.985 |       0.985  |    885797 |
+|   <b> avg/total </b> |  -  |    0.985 |   0.985 |    0.985  |  586703|
     
 ## How To Contribute <a name="contrib"></a>
 
