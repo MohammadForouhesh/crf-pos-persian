@@ -20,7 +20,7 @@ This repository contains Persian Part of Speech tagger based on Conditional Rand
 2. [Installation](#install)
    1. [Using Pip](#pip)
    2. [From Source](#source)
-   3. [Nn CoLab](#colab)
+   3. [On CoLab](#colab)
 3. [Usage](#usage)
 4. [Implementation Details](#implementation-details)
 5. [Evaluation](#eval)
