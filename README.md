@@ -1,5 +1,5 @@
 # Persian Parts-of-Speech tagger
-
+[![github-action-deploy](https://github.com/MohammadForouhesh/crf-pos-persian/actions/workflows/deploy_test.yml/badge.svg?branch=main)](https://github.com/MohammadForouhesh/crf-pos-persian/actions/workflows/deploy_test.yml/badge.svg?branch=main)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/?branch=main)
 [![Code Coverage](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/badges/coverage.png?b=main)](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/?branch=main)
 [![Build Status](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/badges/build.png?b=main)](https://scrutinizer-ci.com/g/MohammadForouhesh/crf-pos-persian/build-status/main)
