@@ -62,7 +62,7 @@ class MetaTagger:
             if item[1] == role: yield item[0]
 
     @staticmethod
-    def find_pos_index(pos_tagged: List[Tuple[str, str]], role: str) -> Generator[int]:
+    def find_pos_index(pos_tagged: List[Tuple[str, str]], role: str) -> Generator[int, None, None]:
         pos_tags = [item[1] for item in pos_tagged]
         for ind, tag in enumerate(pos_tags):
             if tag == role: yield ind
