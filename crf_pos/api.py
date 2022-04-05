@@ -57,5 +57,6 @@ def get_resources(dir_path: str, resource_name: str) -> str:
     """
     save_dir = dir_path + '/resources/'
     os.makedirs(save_dir, exist_ok=True)
+    print('Downloading resources ...')
     downloader(path=http_dict[resource_name], save_path=save_dir + resource_name, mode='wb')
     return str(save_dir + resource_name)
