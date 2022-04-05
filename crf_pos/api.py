@@ -39,6 +39,7 @@ def downloader(path: str, save_path: str, mode: str) -> Union[int, None]:
     """
     if os.path.isfile(save_path): return 0
     try:
+        print('Downloading resources ...')
         model_bin = requests.get(path, allow_redirects=True)
         with open(save_path, mode) as resource:
             resource.write(model_bin.content)

@@ -35,9 +35,9 @@ class MetaTagger:
         """
         if isinstance(item, str):   item = self.norm.normalize(item).split()
         else:                       item = self.norm.normalize(' '.join(item)).split()
-        return self.parse([item])[0]
+        return MetaTagger.pos_process(self.parse([item])[0])
 
-    def parse(self, token_list: List[str]) -> List[List[Tuple[Any, Any]]]:
+    def parse(self, token_list: List[List[str]]) -> List[List[Tuple[Any, Any]]]:
         """
         An abstract method, to be overwritten by its descendants.
         :param token_list:  A list of tokens (strings)
@@ -55,3 +55,27 @@ class MetaTagger:
         """
         for key, item in iterable:
             yield list(zip(key, item))
+
+    @staticmethod
+    def extract_pos_words(pos_tagged: List[Tuple[str, str]], role: str) -> Generator[str, None, None]:
+        for item in pos_tagged:
+            if item[1] == role: yield item[0]
+
+    @staticmethod
+    def find_pos_index(pos_tagged: List[Tuple[str, str]], role: str) -> Generator[int, None, None]:
+        pos_tags = [item[1] for item in pos_tagged]
+        for ind, tag in enumerate(pos_tags):
+            if tag == role: yield ind
+
+    @staticmethod
+    def find_pos_word(pos_tagged: List[Tuple[str, str]], role: str, index: int) -> str:
+        try:    return list(MetaTagger.extract_pos_words(pos_tagged, role))[index]
+        except: return ''
+
+    @staticmethod
+    def pos_process(pos_tagged: List[Tuple[Any, Any]]):
+        verbs_index: Generator[int] = MetaTagger.find_pos_index(pos_tagged, 'V')
+        for ind in verbs_index:
+            if pos_tagged[ind - 1][1] == 'N':   pos_tagged[ind - 1] = (pos_tagged[ind - 1][0], 'V')
+            if pos_tagged[ind - 1][1] == 'ADJ': pos_tagged[ind - 1] = (pos_tagged[ind - 1][0], 'V')
+        return pos_tagged

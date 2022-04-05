@@ -27,7 +27,7 @@ class WapitiPosTagger(MetaTagger):
         model_path = get_resources(self.dir_path, resource_name='UPC_full_model_wapiti')
         self.tagger = Model(model=model_path)
 
-    def parse(self, token_list: List[str]) -> List[List[Tuple[Any, Any]]]:
+    def parse(self, token_list: List[List[str]]) -> List[List[Tuple[Any, Any]]]:
         """
         Primary function that overwrite the same method from the super class. This function is
         responsible for the logic behind the model.

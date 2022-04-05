@@ -28,7 +28,7 @@ class CrfPosTagger(MetaTagger):
         with open(model_path, 'rb') as resource:
             self.tagger = pickle.load(resource)
 
-    def parse(self, token_list: List[str]) -> List[List[Tuple[Any, Any]]]:
+    def parse(self, token_list: List[List[str]]) -> List[List[Tuple[Any, Any]]]:
         """
         Primary function that overwrite the same method from the super class. This function is
         responsible for the logic behind the model.
