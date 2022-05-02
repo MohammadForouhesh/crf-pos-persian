@@ -13,6 +13,14 @@
 [![Downloads](https://pepy.tech/badge/crf-pos)](https://pepy.tech/project/crf-pos)
 [![Downloads_per_month](https://pepy.tech/badge/crf-pos/month)](https://pepy.tech/project/crf-pos)
 
+ 
+> Mohammad H. Forouhesh
+> 
+> Metodata Inc ®
+> 
+> April 25, 2022
+
+
 This repository contains Persian Part of Speech tagger based on Conditional Random Fields and a native Text Normalizer.
 
 # Table of Contents
