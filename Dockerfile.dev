@@ -1,0 +1,11 @@
+FROM cimg/python:3.8
+
+WORKDIR /usr/app
+
+COPY /requirements.txt /usr/app/
+COPY setup.* /usr/app/
+COPY *.toml /usr/app/
+
+RUN python setup.py install
+
+CMD [ "pytest", "-v" ]
