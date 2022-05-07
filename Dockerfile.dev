@@ -8,4 +8,6 @@ COPY *.toml /usr/app/
 
 RUN python setup.py install
 
+COPY . /usr/app/
+
 CMD [ "pytest", "-v" ]
