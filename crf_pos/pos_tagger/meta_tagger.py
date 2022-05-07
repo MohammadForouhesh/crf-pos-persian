@@ -35,8 +35,9 @@ class MetaTagger:
         """
         if isinstance(item, str):   item = self.norm.normalize(item).split()
         else:                       item = self.norm.normalize(' '.join(item)).split()
-        return MetaTagger.pos_process(self.parse([item])[0])
-
+        # return MetaTagger.pos_process(self.parse([item])[0])
+        return self.parse([item])[0]
+        
     def parse(self, token_list: List[List[str]]) -> List[List[Tuple[Any, Any]]]:
         """
         An abstract method, to be overwritten by its descendants.
