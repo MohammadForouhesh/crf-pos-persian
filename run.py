@@ -14,15 +14,15 @@ from crf_pos.pos_tagger.meta_tagger import MetaTagger
 from crf_pos.pos_tagger.wapiti import WapitiPosTagger
 
 
-def main():
-    tagger: MetaTagger = WapitiPosTagger()
+def main(tagger: MetaTagger):
     stdin: str = input('A sentence to tag its parts-of-speech: [Press Q to exit]\n>>>')
     if stdin.lower() == 'q':
         raise Exception('Quit')
-    return tagger[stdin]
+    print(tagger[stdin])
 
 
 if __name__ == '__main__':
+    tagger: MetaTagger = WapitiPosTagger()
     while True:
-        try:    print(main())
+        try:    main(tagger)
         except: break
