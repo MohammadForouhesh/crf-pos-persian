@@ -1,4 +1,4 @@
-FROM python:3.9-bullseye
+FROM ubuntu
 
 WORKDIR /usr/app
 
@@ -6,7 +6,7 @@ COPY /requirements.txt /usr/app/
 COPY setup.* /usr/app/
 COPY *.toml /usr/app/
 
-RUN python setup.py install
+RUN python3 setup.py install
 
 COPY . /usr/app/
 
