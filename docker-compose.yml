@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
     volumes:
       - /usr/app/resources
       - .:/user/app

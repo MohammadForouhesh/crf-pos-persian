@@ -37,7 +37,7 @@ jobs:
       - run:
           name: Run coverage
           command: |
-            coverage run main.py
+            coverage run test.py
             coverage report -m
     parallelism: 1
 
