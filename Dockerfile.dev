@@ -1,4 +1,4 @@
-FROM cimg/python:3.8
+FROM python:3.9-bullseye
 
 WORKDIR /usr/app
 
@@ -10,4 +10,4 @@ RUN python setup.py install
 
 COPY . /usr/app/
 
-CMD ["python", "main.py"]
+CMD ["pytest", "-v"]
