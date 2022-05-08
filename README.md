@@ -25,14 +25,15 @@ This repository contains Persian Part of Speech tagger based on Conditional Rand
 
 # Table of Contents
 1. [TO-DO](#todo)
-2. [Installation](#install)
+2. [Docker](#docker)
+3. [Installation](#install)
    1. [Using Pip](#pip)
    2. [From Source](#source)
    3. [On CoLab](#colab)
-3. [Usage](#usage)
-4. [Implementation Details](#implementation-details)
-5. [Evaluation](#eval)
-6. [How To Contribute](#contrib)
+4. [Usage](#usage)
+5. [Implementation Details](#implementation-details)
+6. [Evaluation](#eval)
+7. [How To Contribute](#contrib)
 
 [comment]: <> (5. [I/O]&#40;#tpa_io&#41;)
 
@@ -63,7 +64,8 @@ This repository contains Persian Part of Speech tagger based on Conditional Rand
 - [x] CircleCI CI/CD Pipeline Config [issue#14](https://github.com/MohammadForouhesh/crf-pos-persian/issues/14)
 - [x] Interactive Docker container via `docker-compose` [pull#23](https://github.com/MohammadForouhesh/crf-pos-persian/pull/23)
 
-## Docker
+## Docker <a name="docker"></a>
+A tiny interactive docker container is provided for production.
 ```bash
 git clone https://github.com/MohammadForouhesh/crf-pos-persian.git
 docker-compose run --rm crf-pos
