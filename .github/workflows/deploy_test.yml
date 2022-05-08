@@ -33,5 +33,5 @@ jobs:
     - name: Test
       run: |
         pytest -v
-        coverage run main.py
+        coverage run test.py
         coverage report -m
