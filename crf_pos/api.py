@@ -43,8 +43,8 @@ def downloader(path: str, save_path: str, mode: str) -> Union[int, None]:
         model_bin = requests.get(path, allow_redirects=True)
         with open(save_path, mode) as resource:
             resource.write(model_bin.content)
-    except Exception:
-        raise Exception('not a proper webpage')
+    except Exception as e:
+        raise e.with_traceback
 
 
 def get_resources(dir_path: str, resource_name: str) -> str:
