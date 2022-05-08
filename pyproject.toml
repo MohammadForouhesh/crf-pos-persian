@@ -7,7 +7,7 @@ minversion = "6.0"
 addopts = "-ra --doctest-modules"
 testpaths = [
     "crf_pos",
-    "main.py",
+    "test.py",
 ]
 
 [tool.black]
