@@ -19,8 +19,8 @@ from typing import Union
 
 import requests
 
-http_dict = {'UPC_full_model_wapiti': 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/UPC_full_model_wapiti',
-             'perpos.model': 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/perpos.model',
+http_dict = {'UPC_full_model_wapiti': 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v.2.2.2/UPC_full_model_wapiti',
+             'perpos.model': 'https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v.2.2.2/perpos.model',
              'corrections.txt': 'https://raw.githubusercontent.com/MohammadForouhesh/crf-pos-persian/main/resources/corrections.txt'}
 
 
@@ -29,7 +29,7 @@ def downloader(path: str, save_path: str, mode: str) -> Union[int, None]:
     A tool to download and save files over https.
     supported http links are:
     - https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/UPC_full_model_wapiti
-    - https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v2.0.0.alpha/perpos.model
+    - https://github.com/MohammadForouhesh/crf-pos-persian/releases/download/v.2.2.2/perpos.model
     - https://raw.githubusercontent.com/MohammadForouhesh/crf-pos-persian/main/resources/corrections.txt
 
     :param path:        The path to the desired file.
@@ -54,7 +54,7 @@ def get_resources(dir_path: str, resource_name: str) -> str:
     :param resource_name:   Resource name.
     :return:                Path to the downloaded resource.
     """
-    save_dir = dir_path + '/resources/'
+    save_dir = dir_path + 'resources/'
     os.makedirs(save_dir, exist_ok=True)
     downloader(path=http_dict[resource_name], save_path=save_dir + resource_name, mode='wb')
     return str(save_dir + resource_name)
