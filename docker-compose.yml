@@ -1,0 +1,9 @@
+version: '3'
+services:
+  crf-pos:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /usr/app/resources
+      - .:/user/app
