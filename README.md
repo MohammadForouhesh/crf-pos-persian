@@ -61,6 +61,13 @@ This repository contains Persian Part of Speech tagger based on Conditional Rand
 - [x] Excel code quality [pull#11](https://github.com/MohammadForouhesh/crf-pos-persian/pull/11)
 - [x] Adding documentation and flowchart of the code.
 - [x] CircleCI CI/CD Pipeline Config [issue#14](https://github.com/MohammadForouhesh/crf-pos-persian/issues/14)
+- [x] Interactive Docker container via `docker-compose` [pull#23](https://github.com/MohammadForouhesh/crf-pos-persian/pull/23)
+
+## Docker
+```bash
+git clone https://github.com/MohammadForouhesh/crf-pos-persian.git
+docker-compose run --rm crf-pos
+```
 
 ## Installation: <a name="install"></a>
 ### Using Pip <a name="pip"></a>
