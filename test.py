@@ -94,7 +94,7 @@ class WapitiTestCase(unittest.TestCase):
 
 class FlaskTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        self.url = "172.16.10.15:32711/infering"
+        self.url = "localhost:5000/infering"
         self.headers = {'Content-Type': 'application/json'}
         self.all_tags = ('N', 'P', 'V', 'ADV', 'ADJ', 'PRO', 'CON')
 
