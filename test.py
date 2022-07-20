@@ -11,6 +11,8 @@ This module serves as unit testing for various functionalities in the code.
 """
 
 import unittest
+import requests
+import json
 from crf_pos.pos_tagger.crf import CrfPosTagger
 from crf_pos.api import downloader
 from crf_pos.pos_tagger.wapiti import WapitiPosTagger
@@ -88,6 +90,21 @@ class WapitiTestCase(unittest.TestCase):
     def test_wapiti_soundness(self) -> None:
         text = 'ابراهیم رئیسی رئيس جمهور جمهوری اسلامی ایران میباشد'
         self.assertEqual(self.tagger[text], self.tagger[text.split()])
+
+
+class FlaskTestCase(unittest.TestCase):
+    def setUp(self) -> None:
+        self.url = "172.16.10.15:32711/infering"
+        self.headers = {'Content-Type': 'application/json'}
+        self.all_tags = ('N', 'P', 'V', 'ADV', 'ADJ', 'PRO', 'CON')
+
+    def test_flask_api(self) -> None:
+        payload = json.dumps({
+            "stdin": "ابراهیم رئیسی رئيس جمهور جمهوری اسلامی ایران میباشد"
+            })
+        response = requests.request("POST", self.url, headers=self.headers, data=payload)
+        for item in response.text:
+            self.assertIn(member=item[1], container=self.all_tags)
 
 
 if __name__ == '__main__':
