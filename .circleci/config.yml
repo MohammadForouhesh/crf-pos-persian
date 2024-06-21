@@ -25,6 +25,7 @@ jobs:
       - run:
           name: Run tests
           command: |
+            python run.py
             pytest -v
     parallelism: 3
 
@@ -37,6 +38,7 @@ jobs:
       - run:
           name: Run coverage
           command: |
+            python run.py
             coverage run test.py
             coverage report -m
     parallelism: 1
@@ -69,6 +71,7 @@ jobs:
       - run:
           name: Test PyPI Release
           command: |
+            python run.py
             pytest -v
 
 workflows:
